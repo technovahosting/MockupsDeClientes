@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<template id="__bundler_thumbnail">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#76BC4A"/><g transform="translate(50,50)" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="-12" cy="9" r="7"/><circle cx="12" cy="9" r="7"/><path d="M-12 9 L-3 -9 L7 -9 M-3 -9 L12 9 M-7 -9 L1 -9"/></g></svg>
+</template>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/gr-grupo-empresarial-design-system-019e15a6-dbe7-79fb-a93e-65462cdea710/colors_and_type.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="_ds/gr-grupo-empresarial-design-system-019e15a6-dbe7-79fb-a93e-65462cdea710/_ds_bundle.js"></script>
+<script>
+(function(){
+  function whenLucide(cb){ if(window.lucide){cb();return;} var t=setInterval(function(){ if(window.lucide){clearInterval(t);cb();} },40); }
+  function pascal(n){ return n.replace(/(^|-)(\w)/g,function(m,a,b){return b.toUpperCase();}); }
+  function build(n,s){ var dict=(window.lucide&&window.lucide.icons)||window.lucide||{}; var node=dict[pascal(n)]; if(!node||!node.forEach){ return ''; } var svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+s+'" height="'+s+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'; node.forEach(function(ch){ if(!ch||!ch[0])return; var tag=ch[0],at=ch[1]||{},a=''; for(var k in at){ a+=' '+k+'="'+at[k]+'"'; } svg+='<'+tag+a+'></'+tag+'>'; }); return svg+'</svg>'; }
+  if(!customElements.get('lucide-icon')){
+    class LucideIcon extends HTMLElement{
+      static get observedAttributes(){return ['name','size'];}
+      connectedCallback(){this._r();}
+      attributeChangedCallback(){if(this.isConnected)this._r();}
+      _r(){ var self=this; var n=this.getAttribute('name')||''; var s=this.getAttribute('size')||'20'; if(!self.shadowRoot){ self.attachShadow({mode:'open'}); } whenLucide(function(){ self.shadowRoot.innerHTML='<style>:host{display:inline-flex;align-items:center;justify-content:center;line-height:0}svg{display:block}</style>'+build(n,s); }); }
+    }
+    customElements.define('lucide-icon', LucideIcon);
+  }
+})();
+</script>
+<style>
+:root{
+  --primary:#76BC4A; --primary-hover:#5FA236; --primary-soft:rgba(118,188,74,0.12); --primary-soft-strong:rgba(118,188,74,0.20);
+  --danger:#B83B2D; --danger-soft:rgba(184,59,45,0.12); --warning:#C68A1F; --warning-soft:rgba(198,138,31,0.14); --info:#4A8FB8; --info-soft:rgba(74,143,184,0.14);
+  --bg:#F8F7FA; --bg-elev:#FFFFFF; --bg-soft:#F1F0F2; --fg:#2F2B3D; --fg-muted:#6F6B7D; --fg-faint:#A5A3AE;
+  --border:rgba(47,43,61,0.08); --border-2:rgba(47,43,61,0.16); --shadow-card:0 2px 6px rgba(47,43,61,0.06);
+  --map-bg:#E6E9E3; --map-road:#FFFFFF; --map-block:rgba(47,43,61,0.04); --map-water:#CFE0E6;
+  --stage:#E4E4E7; --stage-dot:rgba(47,43,61,0.10);
+}
+[data-app-theme="dark"]{
+  --bg:#25293C; --bg-elev:#2F3349; --bg-soft:#3B3F5C; --fg:#E7E3FC; --fg-muted:#B6BEE3; --fg-faint:#7E83A5;
+  --border:rgba(231,227,252,0.09); --border-2:rgba(231,227,252,0.18); --shadow-card:0 2px 6px rgba(15,17,27,0.30);
+  --map-bg:#1B2030; --map-road:#2C3346; --map-block:rgba(255,255,255,0.03); --map-water:#1E2A3A;
+  --stage:#15171F; --stage-dot:rgba(255,255,255,0.05);
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:var(--font-body);}
+lucide-icon{display:inline-flex;align-items:center;justify-content:center;line-height:0;flex:none;}
+lucide-icon svg{display:block;}
+button{font-family:inherit;}
+::-webkit-scrollbar{width:0;height:0;}
+@keyframes mc-radar{0%{transform:scale(.5);opacity:.6}100%{transform:scale(2.4);opacity:0}}
+@keyframes mc-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes mc-dash{to{stroke-dashoffset:-28}}
+@keyframes mc-spin{to{transform:rotate(360deg)}}
+@keyframes mc-toast{from{transform:translate(-50%,12px);opacity:0}to{transform:translate(-50%,0);opacity:1}}
+@keyframes mc-sheet{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes mc-move{0%{offset-distance:0%}100%{offset-distance:100%}}
+@keyframes mc-trufimove{0%{top:27%}100%{top:60%}}
+</style>
+</helmet>
+<div data-app-theme="{{ theme }}" style="min-height:100vh;width:100%;background-color:var(--stage);background-image:radial-gradient(var(--stage-dot) 1.2px,transparent 1.2px);background-size:22px 22px;display:flex;flex-direction:column;align-items:center;gap:18px;padding:28px 20px 40px;--primary:{{ accent }};--primary-soft:{{ accentSoft }};--primary-soft-strong:{{ accentSoftStrong }};--primary-hover:{{ accent }}">
+
+  <div style="width:394px;max-width:100%;display:flex;align-items:center;gap:12px;background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:10px 12px;box-shadow:var(--shadow-card)">
+    <div style="width:34px;height:34px;border-radius:9px;background:var(--primary);display:flex;align-items:center;justify-content:center;flex:none"><lucide-icon name="bike" size="19" style="color:#fff"></lucide-icon></div>
+    <div style="flex:1;min-width:0">
+      <div style="font-family:var(--font-display);font-size:14px;font-weight:700;letter-spacing:-0.01em;color:var(--fg)">MueveCotoca</div>
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--fg-faint)">Mockup interactivo</div>
+    </div>
+    <div style="display:flex;background:var(--bg-soft);border-radius:999px;padding:3px;gap:2px">
+      <button onClick="{{ chooseRolePax }}" style="border:none;cursor:pointer;font-size:11px;font-weight:600;padding:6px 9px;border-radius:999px;background:{{ paxSwBg }};color:{{ paxSwC }}">Pasajero</button>
+      <button onClick="{{ chooseRoleDrv }}" style="border:none;cursor:pointer;font-size:11px;font-weight:600;padding:6px 9px;border-radius:999px;background:{{ drvSwBg }};color:{{ drvSwC }}">Moto</button>
+      <button onClick="{{ chooseRoleTrf }}" style="border:none;cursor:pointer;font-size:11px;font-weight:600;padding:6px 9px;border-radius:999px;background:{{ trfSwBg }};color:{{ trfSwC }}">Trufi</button>
+    </div>
+    <div style="display:flex;background:var(--bg-soft);border-radius:999px;padding:3px;gap:2px">
+      <button onClick="{{ setLight }}" title="Claro" style="width:30px;height:30px;border:none;cursor:pointer;border-radius:999px;display:flex;align-items:center;justify-content:center;background:{{ lightBtnBg }};color:{{ lightBtnC }}"><lucide-icon name="sun" size="16"></lucide-icon></button>
+      <button onClick="{{ setDark }}" title="Oscuro" style="width:30px;height:30px;border:none;cursor:pointer;border-radius:999px;display:flex;align-items:center;justify-content:center;background:{{ darkBtnBg }};color:{{ darkBtnC }}"><lucide-icon name="moon" size="15"></lucide-icon></button>
+    </div>
+  </div>
+
+  <div style="width:394px;max-width:100%;height:762px;background:#0c0d10;border:11px solid #0c0d10;border-radius:46px;box-shadow:0 30px 60px -18px rgba(20,22,34,.45),0 10px 22px rgba(20,22,34,.18);position:relative;flex:none">
+    <div ref="{{ screenRef }}" style="position:absolute;inset:0;background:var(--bg);border-radius:35px;overflow:hidden;display:flex;flex-direction:column;color:var(--fg)">
+
+      <div style="height:34px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--fg);flex:none;position:relative;z-index:8;background:transparent">
+        <span>14:25</span>
+        <div style="position:absolute;left:50%;top:10px;transform:translateX(-50%);width:9px;height:9px;border-radius:50%;background:#000;opacity:.85"></div>
+        <div style="display:flex;gap:5px;align-items:center">
+          <lucide-icon name="signal" size="14"></lucide-icon>
+          <lucide-icon name="wifi" size="14"></lucide-icon>
+          <lucide-icon name="battery-medium" size="17"></lucide-icon>
+        </div>
+      </div>
+
+      <div style="flex:1;position:relative;overflow:hidden;display:flex;flex-direction:column">
+
+        <sc-if value="{{ showLogin }}" hint-placeholder-val="{{ true }}">
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;background:linear-gradient(180deg,var(--primary-soft) 0%,var(--bg) 40%)">
+            <div style="flex:1;overflow-y:auto;display:flex;flex-direction:column;padding:30px 26px 22px">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:14px">
+                <div style="width:66px;height:66px;border-radius:19px;background:var(--primary);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(118,188,74,.38)"><lucide-icon name="route" size="33" style="color:#fff"></lucide-icon></div>
+                <div style="text-align:center">
+                  <div style="font-family:var(--font-display);font-size:27px;font-weight:700;letter-spacing:-0.02em;color:var(--fg)">Mueve<span style="color:var(--primary)">Cotoca</span></div>
+                  <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.13em;text-transform:uppercase;color:var(--fg-muted);margin-top:5px">Mototaxis y Trufis · Cotoca</div>
+                </div>
+              </div>
+              <div style="margin-top:32px">
+                <h2 style="font-family:var(--font-display);font-size:21px;font-weight:700;letter-spacing:-0.02em;color:var(--fg);margin:0 0 4px">Ingresa a tu cuenta</h2>
+                <p style="font-size:13px;color:var(--fg-muted);margin:0 0 16px;line-height:1.5">Usa tu número de celular registrado en la asociación.</p>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <label style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-muted);font-weight:600">Número de celular</label>
+                  <div style="display:flex;align-items:center;gap:9px;background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:13px 14px">
+                    <span style="font-family:var(--font-mono);font-size:13px;color:var(--fg-muted)">+591</span>
+                    <span style="width:1px;height:16px;background:var(--border)"></span>
+                    <span style="font-size:14px;color:var(--fg);letter-spacing:0.06em">7•• ••• ••</span>
+                    <lucide-icon name="smartphone" size="16" style="color:var(--fg-faint);margin-left:auto"></lucide-icon>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:22px">
+                <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-muted);font-weight:600;margin-bottom:11px">Ingresar como</div>
+                <div style="display:flex;flex-direction:column;gap:11px">
+                  <button onClick="{{ chooseRolePax }}" style="display:flex;align-items:center;gap:13px;text-align:left;background:var(--bg-elev);border:1px solid var(--border);border-radius:15px;padding:14px;cursor:pointer" style-hover="border-color:var(--primary)">
+                    <div style="width:46px;height:46px;border-radius:13px;background:var(--primary-soft);display:flex;align-items:center;justify-content:center;flex:none"><lucide-icon name="map-pin" size="23" style="color:var(--primary)"></lucide-icon></div>
+                    <div style="flex:1"><div style="font-size:14.5px;font-weight:700;color:var(--fg)">Soy pasajero</div><div style="font-size:11.5px;color:var(--fg-muted);margin-top:2px">Pedir un mototaxi ahora</div></div>
+                    <lucide-icon name="chevron-right" size="20" style="color:var(--fg-faint)"></lucide-icon>
+                  </button>
+                  <button onClick="{{ chooseRoleDrv }}" style="display:flex;align-items:center;gap:13px;text-align:left;background:var(--bg-elev);border:1px solid var(--border);border-radius:15px;padding:14px;cursor:pointer" style-hover="border-color:var(--primary)">
+                    <div style="width:46px;height:46px;border-radius:13px;background:var(--primary-soft);display:flex;align-items:center;justify-content:center;flex:none"><lucide-icon name="bike" size="23" style="color:var(--primary)"></lucide-icon></div>
+                    <div style="flex:1"><div style="font-size:14.5px;font-weight:700;color:var(--fg)">Soy conductor de mototaxi</div><div style="font-size:11.5px;color:var(--fg-muted);margin-top:2px">Recibir viajes y ver mis ganancias</div></div>
+                    <lucide-icon name="chevron-right" size="20" style="color:var(--fg-faint)"></lucide-icon>
+                  </button>
+                  <button onClick="{{ chooseRoleTrf }}" style="display:flex;align-items:center;gap:13px;text-align:left;background:var(--bg-elev);border:1px solid var(--border);border-radius:15px;padding:14px;cursor:pointer" style-hover="border-color:var(--primary)">
+                    <div style="width:46px;height:46px;border-radius:13px;background:var(--info-soft);display:flex;align-items:center;justify-content:center;flex:none"><lucide-icon name="bus" size="23" style="color:var(--info)"></lucide-icon></div>
+                    <div style="flex:1"><div style="font-size:14.5px;font-weight:700;color:var(--fg)">Soy chofer de trufi</div><div style="font-size:11.5px;color:var(--fg-muted);margin-top:2px">Mi línea, recorrido y recaudación</div></div>
+                    <lucide-icon name="chevron-right" size="20" style="color:var(--fg-faint)"></lucide-icon>
+                  </button>
+                </div>
+              </div>
+              <div style="margin-top:auto;padding-top:20px;text-align:center;font-size:11px;color:var(--fg-faint);line-height:1.6">Al continuar aceptas el reglamento interno<br>de la asociación · <span style="color:var(--primary);font-weight:600">¿Necesitas ayuda?</span></div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showPaxHome }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;overflow:hidden">
+            <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 56px,var(--map-road) 56px 70px),repeating-linear-gradient(0deg,transparent 0 64px,var(--map-road) 64px 78px),var(--map-bg)">
+              <div style="position:absolute;left:30%;top:24%;width:36%;height:26%;background:rgba(118,188,74,.18);border-radius:7px"></div>
+            </div>
+            <sc-if value="{{ isMoto }}" hint-placeholder-val="{{ true }}">
+              <div style="position:absolute;inset:0">
+                <div style="position:absolute;left:30%;top:30%;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:var(--primary);border:3px solid var(--bg-elev);box-shadow:0 3px 8px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center"><lucide-icon name="bike" size="15" style="color:#fff"></lucide-icon></div>
+                <div style="position:absolute;left:74%;top:45%;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:var(--primary);border:3px solid var(--bg-elev);box-shadow:0 3px 8px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center"><lucide-icon name="bike" size="15" style="color:#fff"></lucide-icon></div>
+                <div style="position:absolute;left:60%;top:20%;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:var(--primary);border:3px solid var(--bg-elev);box-shadow:0 3px 8px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center"><lucide-icon name="bike" size="15" style="color:#fff"></lucide-icon></div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ isTrufi }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute;inset:0">
+                <div style="position:absolute;left:28%;top:34%;transform:translate(-50%,-50%);width:33px;height:33px;border-radius:50%;background:var(--info);border:3px solid var(--bg-elev);box-shadow:0 3px 8px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;animation:mc-pulse 1.8s ease-in-out infinite"><lucide-icon name="bus" size="17" style="color:#fff"></lucide-icon></div>
+                <div style="position:absolute;left:71%;top:42%;transform:translate(-50%,-50%);width:33px;height:33px;border-radius:50%;background:var(--info);border:3px solid var(--bg-elev);box-shadow:0 3px 8px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center"><lucide-icon name="bus" size="17" style="color:#fff"></lucide-icon></div>
+                <div style="position:absolute;left:56%;top:22%;transform:translate(-50%,-50%);width:33px;height:33px;border-radius:50%;background:var(--info);border:3px solid var(--bg-elev);box-shadow:0 3px 8px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center"><lucide-icon name="bus" size="17" style="color:#fff"></lucide-icon></div>
+              </div>
+            </sc-if>
+            <div data-tour="map" style="position:absolute;left:47%;top:55%;transform:translate(-50%,-50%);width:26px;height:26px;display:flex;align-items:center;justify-content:center">
+              <div style="position:absolute;width:26px;height:26px;border-radius:50%;background:var(--info);opacity:.25;animation:mc-radar 2s ease-out infinite"></div>
+              <div style="width:18px;height:18px;border-radius:50%;background:var(--info);border:3px solid var(--bg-elev);box-shadow:0 0 0 2px rgba(74,143,184,.4)"></div>
+            </div>
+            <div style="position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:11px;padding:8px 16px 22px;background:linear-gradient(180deg,var(--bg) 35%,transparent)">
+              <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#4A8327);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;font-family:var(--font-display);flex:none">LV</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-family:var(--font-display);font-size:16px;font-weight:700;letter-spacing:-0.01em;color:var(--fg)">Hola, Lucía</div>
+                <div style="font-size:11px;color:var(--fg-muted);display:flex;align-items:center;gap:3px"><lucide-icon name="map-pin" size="11"></lucide-icon>Cotoca · Santa Cruz</div>
+              </div>
+              <button data-tour="help" onClick="{{ startTour }}" title="Ver guía" style="width:40px;height:40px;border-radius:50%;background:var(--bg-elev);border:1px solid var(--border);color:var(--fg-muted);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow-card)"><lucide-icon name="help-circle" size="20"></lucide-icon></button>
+            </div>
+            <button data-tour="sos" onClick="{{ openSos }}" style="position:absolute;right:16px;bottom:290px;width:54px;height:54px;border-radius:50%;background:var(--danger);color:#fff;border:3px solid var(--bg-elev);box-shadow:0 6px 16px rgba(184,59,45,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:1px;z-index:3"><lucide-icon name="shield-alert" size="20" style="color:#fff"></lucide-icon><span style="font-size:8px;font-weight:800;letter-spacing:0.06em">SOS</span></button>
+            <div style="position:absolute;left:0;right:0;bottom:0;background:var(--bg-elev);border-radius:22px 22px 0 0;box-shadow:0 -6px 24px rgba(12,13,16,.12);padding:8px 18px 20px">
+              <div style="width:40px;height:4px;border-radius:2px;background:var(--border-2);margin:0 auto 12px"></div>
+              <div data-tour="service" style="display:flex;background:var(--bg-soft);border-radius:12px;padding:4px;gap:4px;margin-bottom:12px">
+                <button onClick="{{ setServiceMoto }}" style="flex:1;border:none;cursor:pointer;border-radius:9px;padding:9px 0;font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;background:{{ motoSelBg }};color:{{ motoSelC }}"><lucide-icon name="bike" size="16"></lucide-icon>Mototaxi</button>
+                <button onClick="{{ setServiceTrufi }}" style="flex:1;border:none;cursor:pointer;border-radius:9px;padding:9px 0;font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;background:{{ trufiSelBg }};color:{{ trufiSelC }}"><lucide-icon name="bus" size="16"></lucide-icon>Trufi</button>
+              </div>
+              <sc-if value="{{ isMoto }}" hint-placeholder-val="{{ true }}">
+                <div data-tour="dest" style="display:flex;align-items:center;gap:11px;background:var(--bg-soft);border-radius:13px;padding:13px 15px;cursor:text">
+                  <lucide-icon name="search" size="18" style="color:var(--primary)"></lucide-icon>
+                  <span style="flex:1;font-size:14px;font-weight:500;color:var(--fg)">¿A dónde vas?</span>
+                  <span style="font-family:var(--font-mono);font-size:10px;color:var(--fg-faint);background:var(--bg-soft);padding:3px 7px;border-radius:6px">Bs 10-14</span>
+                </div>
+                <div data-tour="saved" style="display:flex;gap:8px;margin-top:12px;overflow-x:auto">
+                  <div style="display:flex;align-items:center;gap:6px;background:var(--bg-soft);border-radius:999px;padding:8px 13px;flex:none"><lucide-icon name="house" size="14" style="color:var(--fg-muted)"></lucide-icon><span style="font-size:12px;font-weight:600;color:var(--fg)">Casa</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;background:var(--bg-soft);border-radius:999px;padding:8px 13px;flex:none"><lucide-icon name="briefcase" size="14" style="color:var(--fg-muted)"></lucide-icon><span style="font-size:12px;font-weight:600;color:var(--fg)">Trabajo</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;background:var(--bg-soft);border-radius:999px;padding:8px 13px;flex:none"><lucide-icon name="map-pin" size="14" style="color:var(--fg-muted)"></lucide-icon><span style="font-size:12px;font-weight:600;color:var(--fg)">Plaza 24 Sept.</span></div>
+                </div>
+                <button data-tour="request" onClick="{{ requestRide }}" style="width:100%;margin-top:14px;padding:15px;border:none;border-radius:14px;background:var(--primary);color:#fff;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px" style-hover="background:var(--primary-hover)"><lucide-icon name="bike" size="19" style="color:#fff"></lucide-icon>Pedir mototaxi</button>
+              </sc-if>
+              <sc-if value="{{ isTrufi }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px">
+                  <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-muted);font-weight:600">Líneas disponibles</span>
+                  <span style="font-size:10.5px;color:var(--fg-faint)">Tarifa fija por persona</span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:9px;max-height:188px;overflow-y:auto">
+                  <sc-for list="{{ trufiLinesList }}" as="line" hint-placeholder-count="3">
+                    <button onClick="{{ line.open }}" style="display:flex;align-items:center;gap:11px;text-align:left;background:var(--bg-soft);border:1px solid var(--border);border-radius:13px;padding:11px 13px;cursor:pointer" style-hover="border-color:var(--primary)">
+                      <div style="width:38px;height:38px;border-radius:10px;background:var(--info-soft);display:flex;align-items:center;justify-content:center;flex:none"><lucide-icon name="bus" size="20" style="color:var(--info)"></lucide-icon></div>
+                      <div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:700;color:var(--fg)">{{ line.name }} · {{ line.fare }}</div><div style="font-size:11.5px;color:var(--fg-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ line.route }}</div></div>
+                      <div style="text-align:right;flex:none"><div style="font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--primary)">{{ line.eta }}</div><div style="font-size:9px;color:var(--fg-faint)">próximo</div></div>
+                    </button>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+
+
+        <sc-if value="{{ showTrufiLine }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;overflow:hidden">
+            <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 56px,var(--map-road) 56px 70px),repeating-linear-gradient(0deg,transparent 0 64px,var(--map-road) 64px 78px),var(--map-bg)"></div>
+            <div style="position:absolute;left:32%;top:24%;width:5px;height:40%;background:var(--info);border-radius:3px"></div>
+            <div style="position:absolute;left:32%;top:64%;width:34%;height:5px;background:var(--info);border-radius:3px"></div>
+            <div style="position:absolute;left:32%;top:24%;transform:translate(-50%,-50%);width:13px;height:13px;border-radius:50%;background:var(--bg-elev);border:4px solid var(--info)"></div>
+            <div style="position:absolute;left:66%;top:64%;transform:translate(-50%,-100%)"><lucide-icon name="map-pin" size="28" style="color:var(--danger)"></lucide-icon></div>
+            <div style="position:absolute;left:32%;transform:translate(-50%,-50%);width:34px;height:34px;border-radius:50%;background:var(--info);border:3px solid var(--bg-elev);box-shadow:0 3px 10px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;animation:mc-trufimove 4s ease-in-out infinite alternate"><lucide-icon name="bus" size="18" style="color:#fff"></lucide-icon></div>
+            <div style="position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:11px;padding:10px 16px 22px;background:linear-gradient(180deg,var(--bg) 40%,transparent)">
+              <button onClick="{{ cancelToHome }}" style="width:40px;height:40px;border-radius:50%;background:var(--bg-elev);border:1px solid var(--border);color:var(--fg);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow-card)"><lucide-icon name="arrow-left" size="20"></lucide-icon></button>
+              <div style="font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--fg)">{{ lineName }}</div>
+              <span style="margin-left:auto;display:flex;align-items:center;gap:5px;background:var(--info-soft);color:var(--info);font-family:var(--font-mono);font-size:10px;font-weight:700;padding:5px 9px;border-radius:999px"><span style="width:6px;height:6px;border-radius:50%;background:var(--info);animation:mc-pulse 1s infinite"></span>En vivo</span>
+            </div>
+            <div style="position:absolute;left:0;right:0;bottom:0;background:var(--bg-elev);border-radius:22px 22px 0 0;box-shadow:0 -6px 24px rgba(12,13,16,.12);padding:16px 18px 20px;max-height:64%;overflow-y:auto">
+              <div style="display:flex;align-items:center;gap:11px;margin-bottom:13px">
+                <div style="width:44px;height:44px;border-radius:12px;background:var(--info-soft);display:flex;align-items:center;justify-content:center;flex:none"><lucide-icon name="bus" size="23" style="color:var(--info)"></lucide-icon></div>
+                <div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:700;color:var(--fg)">{{ lineRoute }}</div><div style="font-size:11.5px;color:var(--fg-muted);display:flex;align-items:center;gap:5px;margin-top:2px"><lucide-icon name="clock" size="12"></lucide-icon>{{ lineSchedule }}</div></div>
+              </div>
+              <div style="display:flex;gap:10px;margin-bottom:15px">
+                <div style="flex:1;background:var(--primary-soft);border-radius:12px;padding:11px 13px"><div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.06em;text-transform:uppercase;color:var(--fg-muted)">Tarifa fija</div><div style="font-family:var(--font-display);font-size:19px;font-weight:700;color:var(--fg);margin-top:2px">{{ lineFare }}</div></div>
+                <div style="flex:1;background:var(--bg-soft);border-radius:12px;padding:11px 13px"><div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.06em;text-transform:uppercase;color:var(--fg-muted)">Próximo trufi</div><div style="font-family:var(--font-display);font-size:19px;font-weight:700;color:var(--fg);margin-top:2px">{{ lineEta }}</div></div>
+              </div>
+              <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-muted);font-weight:600;margin-bottom:6px">Recorrido y paradas</div>
+              <div style="display:flex;flex-direction:column">
+                <sc-for list="{{ lineStops }}" as="stop" hint-placeholder-count="5">
+                  <div style="display:flex;align-items:center;gap:11px;padding:6px 0">
+                    <span style="width:11px;height:11px;border-radius:50%;background:{{ stop.dotColor }};flex:none"></span>
+                    <span style="flex:1;font-size:13px;color:{{ stop.nameColor }};font-weight:{{ stop.nameWeight }}">{{ stop.name }}</span>
+                    <sc-if value="{{ stop.isCurrent }}" hint-placeholder-val="{{ false }}"><span style="display:flex;align-items:center;gap:4px;font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--info);background:var(--info-soft);padding:3px 8px;border-radius:999px"><lucide-icon name="bus" size="11"></lucide-icon>Trufi aquí</span></sc-if>
+                  </div>
+                </sc-for>
+              </div>
+              <button onClick="{{ boardTrufi }}" style="width:100%;margin-top:15px;padding:14px;border:none;border-radius:14px;background:var(--primary);color:#fff;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px"><lucide-icon name="bell" size="17" style="color:#fff"></lucide-icon>Avisarme cuando esté cerca</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showPaxFinding }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;overflow:hidden">
+            <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 56px,var(--map-road) 56px 70px),repeating-linear-gradient(0deg,transparent 0 64px,var(--map-road) 64px 78px),var(--map-bg)"></div>
+            <div style="position:absolute;left:28%;top:30%;width:5px;height:34%;background:var(--primary);border-radius:3px"></div>
+            <div style="position:absolute;left:28%;top:64%;width:36%;height:5px;background:var(--primary);border-radius:3px"></div>
+            <div style="position:absolute;left:28%;top:30%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:var(--bg-elev);border:4px solid var(--primary)"></div>
+            <div style="position:absolute;left:64%;top:64%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center"><lucide-icon name="map-pin" size="30" style="color:var(--danger)"></lucide-icon></div>
+            <div style="position:absolute;left:28%;top:50%;transform:translate(-50%,-50%);width:32px;height:32px;border-radius:50%;background:var(--primary);border:3px solid var(--bg-elev);box-shadow:0 3px 8px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;animation:mc-pulse 1.6s ease-in-out infinite"><lucide-icon name="bike" size="16" style="color:#fff"></lucide-icon></div>
+            <div style="position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:11px;padding:10px 16px 22px;background:linear-gradient(180deg,var(--bg) 40%,transparent)">
+              <button onClick="{{ cancelToHome }}" style="width:40px;height:40px;border-radius:50%;background:var(--bg-elev);border:1px solid var(--border);color:var(--fg);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow-card)"><lucide-icon name="arrow-left" size="20"></lucide-icon></button>
+              <div style="font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--fg)">Tu viaje</div>
+            </div>
+            <div style="position:absolute;left:0;right:0;bottom:0;background:var(--bg-elev);border-radius:22px 22px 0 0;box-shadow:0 -6px 24px rgba(12,13,16,.12);padding:18px 18px 22px">
+              <sc-if value="{{ notFound }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;padding:8px 0 4px">
+                  <div style="position:relative;width:56px;height:56px;display:flex;align-items:center;justify-content:center">
+                    <div style="position:absolute;width:56px;height:56px;border-radius:50%;background:var(--primary-soft);animation:mc-radar 1.8s ease-out infinite"></div>
+                    <div style="width:46px;height:46px;border-radius:50%;background:var(--primary-soft);display:flex;align-items:center;justify-content:center"><lucide-icon name="bike" size="24" style="color:var(--primary)"></lucide-icon></div>
+                  </div>
+                  <div>
+                    <div style="font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--fg)">Buscando mototaxi…</div>
+                    <div style="font-size:12.5px;color:var(--fg-muted);margin-top:3px">Conectando con conductores cercanos de la asociación</div>
+                  </div>
+                  <button onClick="{{ cancelToHome }}" style="width:100%;margin-top:6px;padding:13px;border:1px solid var(--border);border-radius:13px;background:var(--bg-elev);color:var(--fg-muted);font-size:13px;font-weight:600;cursor:pointer">Cancelar</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ found }}" hint-placeholder-val="{{ false }}">
+                <div>
+                  <div style="display:flex;align-items:center;gap:6px;margin-bottom:14px"><span style="width:8px;height:8px;border-radius:50%;background:var(--primary)"></span><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--primary);font-weight:600">Conductor asignado · llega en 2 min</span></div>
+                  <div style="display:flex;align-items:center;gap:12px">
+                    <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#5FA236,#36631B);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:17px;flex:none">JC</div>
+                    <div style="flex:1;min-width:0">
+                      <div style="font-size:15px;font-weight:700;color:var(--fg)">Juan Carlos M.</div>
+                      <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--fg-muted);margin-top:2px"><lucide-icon name="star" size="13" style="color:var(--warning)"></lucide-icon>4,9 · 1.240 viajes</div>
+                    </div>
+                    <div style="text-align:right"><div style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--fg)">152-ABC</div><div style="font-size:11px;color:var(--fg-muted)">Honda rojo</div></div>
+                  </div>
+                  <div style="display:flex;gap:9px;margin-top:14px">
+                    <button style="flex:1;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--bg-elev);color:var(--fg);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px"><lucide-icon name="phone" size="16" style="color:var(--primary)"></lucide-icon>Llamar</button>
+                    <button style="flex:1;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--bg-elev);color:var(--fg);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px"><lucide-icon name="message-circle" size="16" style="color:var(--primary)"></lucide-icon>Mensaje</button>
+                  </div>
+                  <button onClick="{{ startTrip }}" style="width:100%;margin-top:9px;padding:14px;border:none;border-radius:13px;background:var(--primary);color:#fff;font-size:14px;font-weight:700;cursor:pointer">Comenzar viaje</button>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showPaxTrip }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;overflow:hidden">
+            <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 56px,var(--map-road) 56px 70px),repeating-linear-gradient(0deg,transparent 0 64px,var(--map-road) 64px 78px),var(--map-bg)"></div>
+            <div style="position:absolute;left:30%;top:24%;width:5px;height:38%;background:var(--primary);border-radius:3px"></div>
+            <div style="position:absolute;left:30%;top:62%;width:38%;height:5px;background:var(--primary);border-radius:3px"></div>
+            <div style="position:absolute;left:30%;top:24%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:var(--bg-elev);border:4px solid var(--primary)"></div>
+            <div style="position:absolute;left:68%;top:62%;transform:translate(-50%,-100%)"><lucide-icon name="map-pin" size="30" style="color:var(--danger)"></lucide-icon></div>
+            <div style="position:absolute;left:52%;top:62%;transform:translate(-50%,-50%);width:34px;height:34px;border-radius:50%;background:var(--primary);border:3px solid var(--bg-elev);box-shadow:0 3px 10px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;animation:mc-pulse 1.6s ease-in-out infinite"><lucide-icon name="bike" size="17" style="color:#fff"></lucide-icon></div>
+            <div style="position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:11px;padding:10px 16px 22px;background:linear-gradient(180deg,var(--bg) 40%,transparent)">
+              <div style="flex:1;background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:10px 14px;box-shadow:var(--shadow-card);display:flex;align-items:center;gap:10px">
+                <lucide-icon name="navigation-2" size="18" style="color:var(--primary)"></lucide-icon>
+                <div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--fg)">En viaje · llegada 14:31</div><div style="font-size:11px;color:var(--fg-muted)">2,4 km · Plaza 24 de Septiembre</div></div>
+              </div>
+              <button data-tour="sos" onClick="{{ openSos }}" style="width:46px;height:46px;border-radius:50%;background:var(--danger);color:#fff;border:none;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 12px rgba(184,59,45,.4);flex:none;gap:1px"><lucide-icon name="shield-alert" size="17" style="color:#fff"></lucide-icon><span style="font-size:7px;font-weight:800">SOS</span></button>
+            </div>
+            <div style="position:absolute;left:0;right:0;bottom:0;background:var(--bg-elev);border-radius:22px 22px 0 0;box-shadow:0 -6px 24px rgba(12,13,16,.12);padding:18px 18px 22px">
+              <div style="display:flex;align-items:center;gap:12px">
+                <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#5FA236,#36631B);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:16px;flex:none">JC</div>
+                <div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:700;color:var(--fg)">Juan Carlos M.</div><div style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--fg-muted);margin-top:2px"><lucide-icon name="star" size="12" style="color:var(--warning)"></lucide-icon>4,9 · 152-ABC</div></div>
+                <button style="width:42px;height:42px;border-radius:50%;border:1px solid var(--border);background:var(--bg-elev);color:var(--primary);display:flex;align-items:center;justify-content:center;cursor:pointer"><lucide-icon name="phone" size="18"></lucide-icon></button>
+              </div>
+              <button onClick="{{ finishTrip }}" style="width:100%;margin-top:14px;padding:14px;border:none;border-radius:13px;background:var(--primary);color:#fff;font-size:14px;font-weight:700;cursor:pointer">He llegado a destino</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showPaxPay }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;overflow-y:auto;background:var(--bg);display:flex;flex-direction:column">
+            <div style="display:flex;align-items:center;gap:11px;padding:14px 18px">
+              <button onClick="{{ cancelToHome }}" style="width:38px;height:38px;border-radius:50%;background:var(--bg-elev);border:1px solid var(--border);color:var(--fg);display:flex;align-items:center;justify-content:center;cursor:pointer"><lucide-icon name="x" size="19"></lucide-icon></button>
+              <div style="font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--fg)">Pagar viaje</div>
+            </div>
+            <div style="padding:6px 18px 20px;display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 0 4px">
+                <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--fg-faint)">Total a pagar</div>
+                <div style="font-family:var(--font-display);font-size:40px;font-weight:700;letter-spacing:-0.02em;color:var(--fg)">Bs 12,00</div>
+              </div>
+              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow-card);display:flex;flex-direction:column;gap:9px">
+                <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--fg-muted)"><span>Tarifa base (banderazo)</span><span style="font-family:var(--font-mono);color:var(--fg)">Bs 8,00</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--fg-muted)"><span>Recorrido · Centro → Norte (2 tramos)</span><span style="font-family:var(--font-mono);color:var(--fg)">Bs 4,00</span></div>
+                <div style="height:1px;background:var(--border)"></div>
+                <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:700;color:var(--fg)"><span>Total</span><span style="font-family:var(--font-mono)">Bs 12,00</span></div>
+              </div>
+              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:13px 16px;box-shadow:var(--shadow-card)">
+                <div style="display:flex;align-items:center;gap:7px;margin-bottom:9px"><lucide-icon name="map" size="15" style="color:var(--primary)"></lucide-icon><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-muted);font-weight:600">Tarifa por zonas</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--fg-muted);padding:3px 0"><span>Misma zona</span><span style="font-family:var(--font-mono);color:var(--fg)">Bs 8,00</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--fg-muted);padding:3px 0"><span>Zona contigua</span><span style="font-family:var(--font-mono);color:var(--fg)">Bs 10,00</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--fg-muted);padding:3px 0"><span>Dos zonas o más</span><span style="font-family:var(--font-mono);color:var(--fg)">Bs 12,00 – 14,00</span></div>
+              </div>
+              <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-muted);font-weight:600;margin-top:2px">Método de pago</div>
+              <div style="display:flex;gap:10px">
+                <button onClick="{{ setPayQr }}" style="flex:1;border:2px solid {{ payQrBorder }};background:{{ payQrBg }};border-radius:14px;padding:14px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:7px"><lucide-icon name="qr-code" size="24" style="color:var(--primary)"></lucide-icon><span style="font-size:12.5px;font-weight:700;color:var(--fg)">Pago QR</span></button>
+                <button onClick="{{ setPayEf }}" style="flex:1;border:2px solid {{ payEfBorder }};background:{{ payEfBg }};border-radius:14px;padding:14px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:7px"><lucide-icon name="banknote" size="24" style="color:var(--primary)"></lucide-icon><span style="font-size:12.5px;font-weight:700;color:var(--fg)">Efectivo</span></button>
+              </div>
+              <sc-if value="{{ payQr }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:8px;background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:var(--shadow-card)">
+                  <div style="width:128px;height:128px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;border:1px solid var(--border)"><lucide-icon name="qr-code" size="104" style="color:#0c0d10"></lucide-icon></div>
+                  <div style="font-size:12px;color:var(--fg-muted);text-align:center">Escanea con tu app de banco · pago móvil</div>
+                </div>
+              </sc-if>
+              <button onClick="{{ payNow }}" style="width:100%;padding:15px;border:none;border-radius:14px;background:var(--primary);color:#fff;font-size:15px;font-weight:700;cursor:pointer">Confirmar pago</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showPaxRate }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;overflow-y:auto;background:var(--bg);display:flex;flex-direction:column;padding:24px 22px 22px">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:14px">
+              <div style="width:74px;height:74px;border-radius:50%;background:linear-gradient(135deg,#5FA236,#36631B);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:24px">JC</div>
+              <div style="text-align:center"><div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--fg)">¿Cómo estuvo tu viaje?</div><div style="font-size:13px;color:var(--fg-muted);margin-top:3px">Con Juan Carlos M. · MueveCotoca</div></div>
+              <div style="display:flex;gap:8px;margin-top:4px">
+                <lucide-icon name="star" size="38" style="color:var(--warning)"></lucide-icon><lucide-icon name="star" size="38" style="color:var(--warning)"></lucide-icon><lucide-icon name="star" size="38" style="color:var(--warning)"></lucide-icon><lucide-icon name="star" size="38" style="color:var(--warning)"></lucide-icon><lucide-icon name="star" size="38" style="color:var(--fg-faint)"></lucide-icon>
+              </div>
+            </div>
+            <div style="margin-top:22px"><div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-muted);font-weight:600;margin-bottom:10px">Dar propina (opcional)</div>
+              <div style="display:flex;gap:9px">
+                <div style="flex:1;text-align:center;border:1px solid var(--border);border-radius:12px;padding:11px 0;font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--fg)">Bs 2</div>
+                <div style="flex:1;text-align:center;border:2px solid var(--primary);border-radius:12px;padding:11px 0;font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--primary);background:var(--primary-soft)">Bs 5</div>
+                <div style="flex:1;text-align:center;border:1px solid var(--border);border-radius:12px;padding:11px 0;font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--fg)">Bs 10</div>
+              </div>
+            </div>
+            <div style="margin-top:16px;background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:13px 15px;font-size:13px;color:var(--fg-faint)">Deja un comentario para el conductor…</div>
+            <button onClick="{{ finishRate }}" style="width:100%;margin-top:auto;padding:15px;border:none;border-radius:14px;background:var(--primary);color:#fff;font-size:15px;font-weight:700;cursor:pointer">Enviar y finalizar</button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showPaxTrips }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;overflow-y:auto;background:var(--bg);padding:16px 18px 24px">
+            <div style="font-family:var(--font-display);font-size:21px;font-weight:700;letter-spacing:-0.02em;color:var(--fg);margin:6px 0 4px">Mis viajes</div>
+            <div style="font-size:12.5px;color:var(--fg-muted);margin-bottom:16px">Historial con conductores de la asociación</div>
+            <div style="display:flex;flex-direction:column;gap:11px">
+              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:14px;box-shadow:var(--shadow-card)">
+                <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--fg-faint)">Hoy · 14:25</span><span style="font-family:var(--font-mono);font-size:14px;font-weight:700;color:var(--fg)">Bs 12,00</span></div>
+                <div style="display:flex;gap:10px;margin-top:10px">
+                  <div style="display:flex;flex-direction:column;align-items:center;padding-top:3px"><span style="width:9px;height:9px;border-radius:50%;border:2px solid var(--primary)"></span><span style="width:2px;flex:1;background:var(--border-2);margin:2px 0"></span><lucide-icon name="map-pin" size="14" style="color:var(--danger)"></lucide-icon></div>
+                  <div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--fg)">Mercado Central</div><div style="font-size:13px;font-weight:600;color:var(--fg);margin-top:13px">Plaza 24 de Septiembre</div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:7px;margin-top:11px;padding-top:11px;border-top:1px solid var(--border)"><div style="width:26px;height:26px;border-radius:50%;background:var(--primary-soft);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--primary)">JC</div><span style="font-size:12px;color:var(--fg-muted)">Juan Carlos M.</span><span style="display:flex;align-items:center;gap:2px;margin-left:auto;font-size:12px;color:var(--fg-muted)"><lucide-icon name="star" size="12" style="color:var(--warning)"></lucide-icon>5,0</span></div>
+              </div>
+              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:14px;box-shadow:var(--shadow-card)">
+                <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--fg-faint)">Ayer · 09:10</span><span style="font-family:var(--font-mono);font-size:14px;font-weight:700;color:var(--fg)">Bs 10,00</span></div>
+                <div style="display:flex;gap:10px;margin-top:10px">
+                  <div style="display:flex;flex-direction:column;align-items:center;padding-top:3px"><span style="width:9px;height:9px;border-radius:50%;border:2px solid var(--primary)"></span><span style="width:2px;flex:1;background:var(--border-2);margin:2px 0"></span><lucide-icon name="map-pin" size="14" style="color:var(--danger)"></lucide-icon></div>
+                  <div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--fg)">Casa</div><div style="font-size:13px;font-weight:600;color:var(--fg);margin-top:13px">Hospital Cotoca</div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:7px;margin-top:11px;padding-top:11px;border-top:1px solid var(--border)"><div style="width:26px;height:26px;border-radius:50%;background:var(--primary-soft);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--primary)">RA</div><span style="font-size:12px;color:var(--fg-muted)">Roberto A.</span><span style="display:flex;align-items:center;gap:2px;margin-left:auto;font-size:12px;color:var(--fg-muted)"><lucide-icon name="star" size="12" style="color:var(--warning)"></lucide-icon>4,8</span></div>
+              </div>
+              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:14px;box-shadow:var(--shadow-card)">
+                <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--fg-faint)">12 jun · 19:40</span><span style="font-family:var(--font-mono);font-size:14px;font-weight:700;color:var(--fg)">Bs 14,00</span></div>
+                <div style="display:flex;gap:10px;margin-top:10px">
+                  <div style="display:flex;flex-direction:column;align-items:center;padding-top:3px"><span style="width:9px;height:9px;border-radius:50%;border:2px solid var(--primary)"></span><span style="width:2px;flex:1;background:var(--border-2);margin:2px 0"></span><lucide-icon name="map-pin" size="14" style="color:var(--danger)"></lucide-icon></div>
+                  <div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--fg)">Terminal Bimodal</div><div style="font-size:13px;font-weight:600;color:var(--fg);margin-top:13px">Barrio Lindo</div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:7px;margin-top:11px;padding-top:11px;border-top:1px solid var(--border)"><div style="width:26px;height:26px;border-radius:50%;background:var(--primary-soft);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--primary)">MF</div><span style="font-size:12px;color:var(--fg-muted)">María F.</span><span style="display:flex;align-items:center;gap:2px;margin-left:auto;font-size:12px;color:var(--fg-muted)"><lucide-icon name="star" size="12" style="color:var(--warning)"></lucide-icon>4,9</span></div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showPaxNews }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;overflow-y:auto;background:var(--bg);padding:16px 18px 24px">
+            <div style="font-family:var(--font-display);font-size:21px;font-weight:700;letter-spacing:-0.02em;color:var(--fg);margin:6px 0 4px">Noticias</div>
+            <div style="font-size:12.5px;color:var(--fg-muted);margin-bottom:16px">Avisos de la Asociación de Mototaxistas</div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="background:var(--bg-elev);border:1px solid var(--border);border-top:3px solid var(--primary);border-radius:4px 4px 14px 14px;padding:15px;box-shadow:var(--shadow-card)">
+                <div style="display:flex;align-items:center;gap:7px;margin-bottom:8px"><span style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--primary);font-weight:700;background:var(--primary-soft);padding:3px 8px;border-radius:999px">Tarifa</span><span style="font-size:11px;color:var(--fg-faint)">Hace 2 h</span></div>
+                <div style="font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--fg);margin-bottom:4px">Tarifa nocturna actualizada</div>
+                <div style="font-size:13px;line-height:1.5;color:var(--fg-muted)">A partir del 1 de julio, los viajes después de las 22:00 tendrán un recargo de Bs 2. Aprobado en asamblea general.</div>
+              </div>
+              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:15px;box-shadow:var(--shadow-card)">
+                <div style="display:flex;align-items:center;gap:7px;margin-bottom:8px"><span style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--info);font-weight:700;background:var(--info-soft);padding:3px 8px;border-radius:999px">Seguridad</span><span style="font-size:11px;color:var(--fg-faint)">Ayer</span></div>
+                <div style="font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--fg);margin-bottom:4px">Nuevos chalecos reflectivos</div>
+                <div style="font-size:13px;line-height:1.5;color:var(--fg-muted)">Pasa por la sede a recoger tu chaleco con número de socio. Uso obligatorio en horario nocturno.</div>
+              </div>
+              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:15px;box-shadow:var(--shadow-card)">
+                <div style="display:flex;align-items:center;gap:7px;margin-bottom:8px"><span style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--warning);font-weight:700;background:var(--warning-soft);padding:3px 8px;border-radius:999px">Evento</span><span style="font-size:11px;color:var(--fg-faint)">3 días</span></div>
+                <div style="font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--fg);margin-bottom:4px">Aniversario de la asociación</div>
+                <div style="font-size:13px;line-height:1.5;color:var(--fg-muted)">Celebramos 18 años al servicio de Cotoca. Misa y almuerzo de confraternización el domingo en la sede.</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showPaxProfile }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;overflow-y:auto;background:var(--bg);padding:20px 18px 24px">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:11px">
+              <div style="width:78px;height:78px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#36631B);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:26px">LV</div>
+              <div style="text-align:center"><div style="font-family:var(--font-display);font-size:19px;font-weight:700;color:var(--fg)">Lucía Vargas</div><div style="font-size:12.5px;color:var(--fg-muted);margin-top:2px">+591 7•• ••• 12 · Pasajera</div></div>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:18px">
+              <div style="flex:1;background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:13px;text-align:center;box-shadow:var(--shadow-card)"><div style="font-family:var(--font-display);font-size:21px;font-weight:700;color:var(--fg)">38</div><div style="font-size:11px;color:var(--fg-muted);margin-top:2px">Viajes</div></div>
+              <div style="flex:1;background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:13px;text-align:center;box-shadow:var(--shadow-card)"><div style="font-family:var(--font-display);font-size:21px;font-weight:700;color:var(--fg);display:flex;align-items:center;justify-content:center;gap:3px">4,9<lucide-icon name="star" size="16" style="color:var(--warning)"></lucide-icon></div><div style="font-size:11px;color:var(--fg-muted);margin-top:2px">Calificación</div></div>
+            </div>
+            <div style="margin-top:16px;background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow-card)">
+              <div style="display:flex;align-items:center;gap:13px;padding:14px 16px;border-bottom:1px solid var(--border)"><lucide-icon name="map-pin" size="19" style="color:var(--primary)"></lucide-icon><span style="flex:1;font-size:14px;font-weight:500;color:var(--fg)">Lugares guardados</span><lucide-icon name="chevron-right" size="18" style="color:var(--fg-faint)"></lucide-icon></div>
+              <div style="display:flex;align-items:center;gap:13px;padding:14px 16px;border-bottom:1px solid var(--border)"><lucide-icon name="credit-card" size="19" style="color:var(--primary)"></lucide-icon><span style="flex:1;font-size:14px;font-weight:500;color:var(--fg)">Métodos de pago</span><lucide-icon name="chevron-right" size="18" style="color:var(--fg-faint)"></lucide-icon></div>
+              <div style="display:flex;align-items:center;gap:13px;padding:14px 16px;border-bottom:1px solid var(--border)"><lucide-icon name="users" size="19" style="color:var(--primary)"></lucide-icon><span style="flex:1;font-size:14px;font-weight:500;color:var(--fg)">Contactos de emergencia</span><lucide-icon name="chevron-right" size="18" style="color:var(--fg-faint)"></lucide-icon></div>
+              <div onClick="{{ startTour }}" style="display:flex;align-items:center;gap:13px;padding:14px 16px;cursor:pointer"><lucide-icon name="help-circle" size="19" style="color:var(--primary)"></lucide-icon><span style="flex:1;font-size:14px;font-weight:500;color:var(--fg)">Ver guía de uso</span><lucide-icon name="chevron-right" size="18" style="color:var(--fg-faint)"></lucide-icon></div>
+            </div>
+            <button onClick="{{ logout }}" style="width:100%;margin-top:16px;padding:13px;border:1px solid var(--border);border-radius:13px;background:var(--bg-elev);color:var(--danger);font-size:13.5px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px"><lucide-icon name="log-out" size="17"></lucide-icon>Cerrar sesión</button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showDrvPanel }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;overflow-y:auto;background:var(--bg);padding:14px 18px 24px">
+            <div style="display:flex;align-items:center;gap:11px">
+              <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#36631B);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:15px;flex:none">JC</div>
+              <div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:700;color:var(--fg)">Juan Carlos M.</div><div style="display:flex;align-items:center;gap:4px;font-size:11.5px;color:var(--fg-muted)"><span style="font-family:var(--font-mono)">Socio N.° 047</span> · <lucide-icon name="star" size="12" style="color:var(--warning)"></lucide-icon>4,9</div></div>
+              <button data-tour="help" onClick="{{ startTour }}" title="Ver guía" style="width:38px;height:38px;border-radius:50%;background:var(--bg-elev);border:1px solid var(--border);color:var(--fg-muted);display:flex;align-items:center;justify-content:center;cursor:pointer"><lucide-icon name="help-circle" size="19"></lucide-icon></button>
+            </div>
+            <div data-tour="online" style="margin-top:16px;background:{{ onlineCardBg }};border:1px solid {{ onlineCardBorder }};border-radius:16px;padding:16px;display:flex;align-items:center;gap:13px;transition:background .2s,border-color .2s">
+              <div style="width:46px;height:46px;border-radius:50%;background:{{ onlineDotBg }};display:flex;align-items:center;justify-content:center;flex:none"><lucide-icon name="power" size="22" style="color:{{ onlineIconC }}"></lucide-icon></div>
+              <div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:700;color:var(--fg)">{{ onlineLabel }}</div><div style="font-size:12px;color:var(--fg-muted)">{{ onlineSub }}</div></div>
+              <button onClick="{{ toggleOnline }}" style="width:52px;height:30px;border-radius:999px;border:none;cursor:pointer;background:{{ onlineSwitchBg }};position:relative;transition:background .2s;flex:none"><span style="position:absolute;top:3px;left:{{ onlineKnobLeft }};width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:left .2s"></span></button>
+            </div>
+            <div data-tour="earn" style="margin-top:13px;background:var(--bg-elev);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:var(--shadow-card)">
+              <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-faint)">Ganancias de hoy</div>
+              <div style="font-family:var(--font-display);font-size:32px;font-weight:700;letter-spacing:-0.02em;color:var(--fg);margin-top:3px">Bs 148,00</div>
+              <div style="display:flex;gap:18px;margin-top:10px;padding-top:12px;border-top:1px solid var(--border)">
+                <div><div style="font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--fg)">12</div><div style="font-size:11px;color:var(--fg-muted)">Viajes</div></div>
+                <div><div style="font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--fg)">6,2 h</div><div style="font-size:11px;color:var(--fg-muted)">En línea</div></div>
+                <div><div style="font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--fg)">48 km</div><div style="font-size:11px;color:var(--fg-muted)">Recorrido</div></div>
+              </div>
+            </div>
+            <div data-tour="requests" style="margin-top:13px">
+              <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-muted);font-weight:600;margin-bottom:10px">Solicitudes</div>
+              <sc-if value="{{ incoming }}" hint-placeholder-val="{{ false }}">
+                <div style="background:var(--bg-elev);border:1px solid var(--primary);border-radius:16px;padding:16px;box-shadow:0 6px 18px rgba(118,188,74,.2);animation:mc-sheet .25s var(--ease-out)">
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><span style="display:flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--primary);font-weight:700"><span style="width:8px;height:8px;border-radius:50%;background:var(--primary);animation:mc-pulse 1s infinite"></span>Nueva solicitud</span><span style="font-family:var(--font-mono);font-size:15px;font-weight:700;color:var(--fg)">Bs 12,00</span></div>
+                  <div style="display:flex;gap:10px"><div style="display:flex;flex-direction:column;align-items:center;padding-top:4px"><span style="width:9px;height:9px;border-radius:50%;border:2px solid var(--primary)"></span><span style="width:2px;flex:1;background:var(--border-2);margin:2px 0"></span><lucide-icon name="map-pin" size="14" style="color:var(--danger)"></lucide-icon></div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--fg)">Mercado Central · 600 m</div><div style="font-size:13px;font-weight:600;color:var(--fg);margin-top:12px">Plaza 24 de Septiembre · 2,4 km</div></div></div>
+                  <div style="display:flex;gap:9px;margin-top:14px"><button onClick="{{ declineRide }}" style="flex:1;padding:13px;border:1px solid var(--border);border-radius:12px;background:var(--bg-elev);color:var(--fg-muted);font-size:13px;font-weight:600;cursor:pointer">Rechazar</button><button onClick="{{ acceptRide }}" style="flex:2;padding:13px;border:none;border-radius:12px;background:var(--primary);color:#fff;font-size:13px;font-weight:700;cursor:pointer">Aceptar viaje</button></div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ noIncoming }}" hint-placeholder-val="{{ true }}">
+                <div style="background:var(--bg-elev);border:1px dashed var(--border-2);border-radius:16px;padding:26px 16px;text-align:center">
+                  <lucide-icon name="{{ idleIcon }}" size="28" style="color:var(--fg-faint)"></lucide-icon>
+                  <div style="font-size:13.5px;font-weight:600;color:var(--fg);margin-top:8px">{{ idleTitle }}</div>
+                  <div style="font-size:12px;color:var(--fg-muted);margin-top:3px">{{ idleSub }}</div>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showDrvActive }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;overflow:hidden">
+            <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 56px,var(--map-road) 56px 70px),repeating-linear-gradient(0deg,transparent 0 64px,var(--map-road) 64px 78px),var(--map-bg)"></div>
+            <div style="position:absolute;left:30%;top:26%;width:5px;height:36%;background:var(--primary);border-radius:3px"></div>
+            <div style="position:absolute;left:30%;top:62%;width:38%;height:5px;background:var(--primary);border-radius:3px"></div>
+            <div style="position:absolute;left:30%;top:26%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:var(--bg-elev);border:4px solid var(--primary)"></div>
+            <div style="position:absolute;left:68%;top:62%;transform:translate(-50%,-100%)"><lucide-icon name="map-pin" size="30" style="color:var(--danger)"></lucide-icon></div>
+            <div style="position:absolute;left:46%;top:44%;transform:translate(-50%,-50%);width:36px;height:36px;border-radius:50%;background:var(--primary);border:3px solid var(--bg-elev);box-shadow:0 3px 10px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;animation:mc-pulse 1.6s ease-in-out infinite"><lucide-icon name="navigation-2" size="17" style="color:#fff"></lucide-icon></div>
+            <div style="position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:11px;padding:10px 16px 22px;background:linear-gradient(180deg,var(--bg) 40%,transparent)">
+              <div style="flex:1;background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:10px 14px;box-shadow:var(--shadow-card);display:flex;align-items:center;gap:10px"><lucide-icon name="navigation-2" size="18" style="color:var(--primary)"></lucide-icon><div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--fg)">Llevando a Lucía</div><div style="font-size:11px;color:var(--fg-muted)">2,4 km · Plaza 24 de Septiembre</div></div></div>
+              <button data-tour="sos" onClick="{{ openSos }}" style="width:46px;height:46px;border-radius:50%;background:var(--danger);color:#fff;border:none;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 12px rgba(184,59,45,.4);flex:none;gap:1px"><lucide-icon name="shield-alert" size="17" style="color:#fff"></lucide-icon><span style="font-size:7px;font-weight:800">SOS</span></button>
+            </div>
+            <div style="position:absolute;left:0;right:0;bottom:0;background:var(--bg-elev);border-radius:22px 22px 0 0;box-shadow:0 -6px 24px rgba(12,13,16,.12);padding:18px 18px 22px">
+              <div style="display:flex;align-items:center;gap:12px">
+                <div style="width:48px;height:48px;border-radius:50%;background:var(--primary-soft);color:var(--primary);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:16px;flex:none">LV</div>
+                <div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:700;color:var(--fg)">Lucía Vargas</div><div style="font-size:12px;color:var(--fg-muted);margin-top:2px">Efectivo · <span style="font-family:var(--font-mono);font-weight:600;color:var(--fg)">Bs 12,00</span></div></div>
+                <button style="width:42px;height:42px;border-radius:50%;border:1px solid var(--border);background:var(--bg-elev);color:var(--primary);display:flex;align-items:center;justify-content:center;cursor:pointer"><lucide-icon name="phone" size="18"></lucide-icon></button>
+              </div>
+              <button onClick="{{ completeRide }}" style="width:100%;margin-top:14px;padding:14px;border:none;border-radius:13px;background:var(--primary);color:#fff;font-size:14px;font-weight:700;cursor:pointer">Finalizar viaje · cobrar Bs 12,00</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showDrvEarn }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;overflow-y:auto;background:var(--bg);padding:16px 18px 24px">
+            <div style="font-family:var(--font-display);font-size:21px;font-weight:700;letter-spacing:-0.02em;color:var(--fg);margin:6px 0 14px">Ganancias</div>
+            <div style="background:linear-gradient(135deg,var(--primary),#4A8327);border-radius:18px;padding:18px;color:#fff">
+              <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;opacity:.85">Esta semana</div>
+              <div style="font-family:var(--font-display);font-size:34px;font-weight:700;letter-spacing:-0.02em;margin-top:3px">Bs 892,00</div>
+              <div style="display:flex;gap:20px;margin-top:12px;padding-top:13px;border-top:1px solid rgba(255,255,255,.2)">
+                <div><div style="font-size:17px;font-weight:700">74</div><div style="font-size:11px;opacity:.85">Viajes</div></div>
+                <div><div style="font-size:17px;font-weight:700">Bs 12,1</div><div style="font-size:11px;opacity:.85">Promedio</div></div>
+                <div><div style="font-size:17px;font-weight:700">38 h</div><div style="font-size:11px;opacity:.85">En línea</div></div>
+              </div>
+            </div>
+            <div style="margin-top:16px;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;background:var(--bg-elev);border:1px solid var(--border);border-radius:16px;padding:16px 14px 12px;box-shadow:var(--shadow-card);height:150px">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;height:100%;justify-content:flex-end"><div style="width:100%;max-width:22px;height:46%;background:var(--primary-soft-strong);border-radius:5px"></div><span style="font-size:10px;color:var(--fg-muted)">L</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;height:100%;justify-content:flex-end"><div style="width:100%;max-width:22px;height:62%;background:var(--primary-soft-strong);border-radius:5px"></div><span style="font-size:10px;color:var(--fg-muted)">M</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;height:100%;justify-content:flex-end"><div style="width:100%;max-width:22px;height:54%;background:var(--primary-soft-strong);border-radius:5px"></div><span style="font-size:10px;color:var(--fg-muted)">M</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;height:100%;justify-content:flex-end"><div style="width:100%;max-width:22px;height:78%;background:var(--primary-soft-strong);border-radius:5px"></div><span style="font-size:10px;color:var(--fg-muted)">J</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;height:100%;justify-content:flex-end"><div style="width:100%;max-width:22px;height:100%;background:var(--primary);border-radius:5px"></div><span style="font-size:10px;color:var(--fg)">V</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;height:100%;justify-content:flex-end"><div style="width:100%;max-width:22px;height:40%;background:var(--primary-soft-strong);border-radius:5px"></div><span style="font-size:10px;color:var(--fg-muted)">S</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;height:100%;justify-content:flex-end"><div style="width:100%;max-width:22px;height:20%;background:var(--bg-soft);border-radius:5px"></div><span style="font-size:10px;color:var(--fg-muted)">D</span></div>
+            </div>
+            <div style="margin-top:16px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-muted);font-weight:600;margin-bottom:10px">Movimientos recientes</div>
+            <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow-card)">
+              <div style="display:flex;align-items:center;gap:11px;padding:13px 15px;border-bottom:1px solid var(--border)"><div style="width:34px;height:34px;border-radius:9px;background:var(--primary-soft);display:flex;align-items:center;justify-content:center"><lucide-icon name="arrow-down-left" size="17" style="color:var(--primary)"></lucide-icon></div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--fg)">Viaje · Plaza 24 Sept.</div><div style="font-size:11px;color:var(--fg-muted)">Hoy 14:25 · QR</div></div><span style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--primary)">+12,00</span></div>
+              <div style="display:flex;align-items:center;gap:11px;padding:13px 15px;border-bottom:1px solid var(--border)"><div style="width:34px;height:34px;border-radius:9px;background:var(--primary-soft);display:flex;align-items:center;justify-content:center"><lucide-icon name="arrow-down-left" size="17" style="color:var(--primary)"></lucide-icon></div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--fg)">Viaje · Hospital Cotoca</div><div style="font-size:11px;color:var(--fg-muted)">Hoy 13:40 · Efectivo</div></div><span style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--primary)">+10,00</span></div>
+              <div style="display:flex;align-items:center;gap:11px;padding:13px 15px"><div style="width:34px;height:34px;border-radius:9px;background:var(--danger-soft);display:flex;align-items:center;justify-content:center"><lucide-icon name="arrow-up-right" size="17" style="color:var(--danger)"></lucide-icon></div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--fg)">Cuota semanal sindicato</div><div style="font-size:11px;color:var(--fg-muted)">Lun 08:00</div></div><span style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--danger)">-20,00</span></div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showDrvUnion }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;overflow-y:auto;background:var(--bg);padding:16px 18px 24px">
+            <div style="font-family:var(--font-display);font-size:21px;font-weight:700;letter-spacing:-0.02em;color:var(--fg);margin:6px 0 4px">Sindicato</div>
+            <div style="font-size:12.5px;color:var(--fg-muted);margin-bottom:16px">Asoc. de Mototaxistas 24 de Septiembre</div>
+            <div style="background:var(--bg-elev);border:1px solid var(--warning);border-radius:16px;padding:16px;box-shadow:var(--shadow-card)">
+              <div style="display:flex;align-items:center;gap:9px;margin-bottom:11px"><div style="width:36px;height:36px;border-radius:10px;background:var(--warning-soft);display:flex;align-items:center;justify-content:center"><lucide-icon name="receipt" size="19" style="color:var(--warning)"></lucide-icon></div><div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--fg)">Cuota semanal</div><div style="font-size:11.5px;color:var(--fg-muted)">Vence el lunes 30 de junio</div></div></div>
+              <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:var(--font-display);font-size:26px;font-weight:700;color:var(--fg)">Bs 20,00</span><span style="font-size:11px;color:var(--warning);font-weight:600">Pendiente</span></div>
+              <button onClick="{{ payDues }}" style="width:100%;margin-top:13px;padding:13px;border:none;border-radius:12px;background:var(--primary);color:#fff;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px"><lucide-icon name="qr-code" size="17" style="color:#fff"></lucide-icon>Pagar cuota con QR</button>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:14px">
+              <div style="flex:1;background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:13px;box-shadow:var(--shadow-card)"><div style="display:flex;align-items:center;gap:6px;color:var(--fg-muted)"><lucide-icon name="calendar-check" size="15" style="color:var(--primary)"></lucide-icon><span style="font-size:11px">Al día</span></div><div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--fg);margin-top:5px">24 sem.</div></div>
+              <div style="flex:1;background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:13px;box-shadow:var(--shadow-card)"><div style="display:flex;align-items:center;gap:6px;color:var(--fg-muted)"><lucide-icon name="map-pin" size="15" style="color:var(--primary)"></lucide-icon><span style="font-size:11px">Mi parada</span></div><div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--fg);margin-top:5px">Plaza · N.° 3</div></div>
+            </div>
+            <div style="margin-top:18px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-muted);font-weight:600;margin-bottom:10px">Estado de cuenta</div>
+            <div style="display:flex;gap:10px">
+              <div style="flex:1;background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:13px;box-shadow:var(--shadow-card)"><div style="font-size:11px;color:var(--fg-muted)">Aportado en 2026</div><div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--fg);margin-top:4px">Bs 480,00</div></div>
+              <div style="flex:1;background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:13px;box-shadow:var(--shadow-card)"><div style="font-size:11px;color:var(--fg-muted)">Saldo pendiente</div><div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--warning);margin-top:4px">Bs 45,00</div></div>
+            </div>
+            <div style="margin-top:13px;background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow-card)">
+              <div style="display:flex;align-items:center;gap:11px;padding:12px 15px;border-bottom:1px solid var(--border)"><div style="width:32px;height:32px;border-radius:9px;background:var(--primary-soft);display:flex;align-items:center;justify-content:center"><lucide-icon name="receipt" size="16" style="color:var(--primary)"></lucide-icon></div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--fg)">Cuota ordinaria · semana 24</div><div style="font-size:11px;color:var(--fg-muted)">Pagado · 23 jun · QR</div></div><span style="font-family:var(--font-mono);font-size:12.5px;font-weight:700;color:var(--primary)">Bs 20,00</span></div>
+              <div style="display:flex;align-items:center;gap:11px;padding:12px 15px;border-bottom:1px solid var(--border)"><div style="width:32px;height:32px;border-radius:9px;background:var(--warning-soft);display:flex;align-items:center;justify-content:center"><lucide-icon name="gift" size="16" style="color:var(--warning)"></lucide-icon></div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--fg)">Aporte extraordinario · aniversario</div><div style="font-size:11px;color:var(--fg-muted)">Pendiente · vence 30 jun</div></div><span style="font-family:var(--font-mono);font-size:12.5px;font-weight:700;color:var(--warning)">Bs 30,00</span></div>
+              <div style="display:flex;align-items:center;gap:11px;padding:12px 15px"><div style="width:32px;height:32px;border-radius:9px;background:var(--danger-soft);display:flex;align-items:center;justify-content:center"><lucide-icon name="triangle-alert" size="16" style="color:var(--danger)"></lucide-icon></div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--fg)">Multa · inasistencia a asamblea</div><div style="font-size:11px;color:var(--fg-muted)">Pendiente · 10 jun</div></div><span style="font-family:var(--font-mono);font-size:12.5px;font-weight:700;color:var(--danger)">Bs 15,00</span></div>
+            </div>
+            <div style="margin-top:18px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-muted);font-weight:600;margin-bottom:10px">Turno de hoy</div>
+            <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow-card);display:flex;align-items:center;gap:12px">
+              <div style="width:40px;height:40px;border-radius:11px;background:var(--info-soft);display:flex;align-items:center;justify-content:center"><lucide-icon name="clock" size="20" style="color:var(--info)"></lucide-icon></div>
+              <div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--fg)">06:00 – 14:00</div><div style="font-size:11.5px;color:var(--fg-muted)">Zona Centro · Parada Plaza principal</div></div>
+              <span style="font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--primary);background:var(--primary-soft);padding:4px 9px;border-radius:999px">Activo</span>
+            </div>
+            <div style="margin-top:18px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-muted);font-weight:600;margin-bottom:10px">Directorio de socios</div>
+            <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow-card)">
+              <div style="display:flex;align-items:center;gap:11px;padding:12px 15px;border-bottom:1px solid var(--border)"><div style="width:34px;height:34px;border-radius:50%;background:var(--primary-soft);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--primary)">RA</div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--fg)">Roberto Áñez</div><div style="font-size:11px;color:var(--fg-muted)">Presidente · Socio N.° 001</div></div><lucide-icon name="phone" size="17" style="color:var(--primary)"></lucide-icon></div>
+              <div style="display:flex;align-items:center;gap:11px;padding:12px 15px;border-bottom:1px solid var(--border)"><div style="width:34px;height:34px;border-radius:50%;background:var(--primary-soft);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--primary)">MF</div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--fg)">María Flores</div><div style="font-size:11px;color:var(--fg-muted)">Secretaria · Socio N.° 012</div></div><lucide-icon name="phone" size="17" style="color:var(--primary)"></lucide-icon></div>
+              <div style="display:flex;align-items:center;gap:11px;padding:12px 15px"><div style="width:34px;height:34px;border-radius:50%;background:var(--primary-soft);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--primary)">LG</div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--fg)">Luis Gutiérrez</div><div style="font-size:11px;color:var(--fg-muted)">Tesorero · Socio N.° 008</div></div><lucide-icon name="phone" size="17" style="color:var(--primary)"></lucide-icon></div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showDrvProfile }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;overflow-y:auto;background:var(--bg);padding:20px 18px 24px">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:11px">
+              <div style="position:relative"><div style="width:78px;height:78px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#36631B);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:26px">JC</div><div style="position:absolute;bottom:0;right:0;width:24px;height:24px;border-radius:50%;background:var(--primary);border:2px solid var(--bg);display:flex;align-items:center;justify-content:center"><lucide-icon name="check" size="13" style="color:#fff"></lucide-icon></div></div>
+              <div style="text-align:center"><div style="font-family:var(--font-display);font-size:19px;font-weight:700;color:var(--fg)">Juan Carlos Méndez</div><div style="font-size:12.5px;color:var(--fg-muted);margin-top:2px">Socio N.° 047 · Conductor verificado</div></div>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:18px">
+              <div style="flex:1;background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:13px;text-align:center;box-shadow:var(--shadow-card)"><div style="font-family:var(--font-display);font-size:21px;font-weight:700;color:var(--fg);display:flex;align-items:center;justify-content:center;gap:3px">4,9<lucide-icon name="star" size="16" style="color:var(--warning)"></lucide-icon></div><div style="font-size:11px;color:var(--fg-muted);margin-top:2px">Calificación</div></div>
+              <div style="flex:1;background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:13px;text-align:center;box-shadow:var(--shadow-card)"><div style="font-family:var(--font-display);font-size:21px;font-weight:700;color:var(--fg)">1.240</div><div style="font-size:11px;color:var(--fg-muted);margin-top:2px">Viajes</div></div>
+            </div>
+            <div style="margin-top:16px;background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow-card)">
+              <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-muted);font-weight:600;margin-bottom:10px">Mi vehículo</div>
+              <div style="display:flex;align-items:center;gap:12px"><div style="width:42px;height:42px;border-radius:11px;background:var(--primary-soft);display:flex;align-items:center;justify-content:center"><lucide-icon name="bike" size="22" style="color:var(--primary)"></lucide-icon></div><div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--fg)">Honda CG 150 · Rojo</div><div style="font-family:var(--font-mono);font-size:12px;color:var(--fg-muted)">Placa 152-ABC</div></div></div>
+            </div>
+            <div style="margin-top:14px;background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow-card)">
+              <div style="display:flex;align-items:center;gap:13px;padding:14px 16px;border-bottom:1px solid var(--border)"><lucide-icon name="file-text" size="19" style="color:var(--primary)"></lucide-icon><span style="flex:1;font-size:14px;font-weight:500;color:var(--fg)">Documentos y licencia</span><lucide-icon name="chevron-right" size="18" style="color:var(--fg-faint)"></lucide-icon></div>
+              <div onClick="{{ startTour }}" style="display:flex;align-items:center;gap:13px;padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer"><lucide-icon name="help-circle" size="19" style="color:var(--primary)"></lucide-icon><span style="flex:1;font-size:14px;font-weight:500;color:var(--fg)">Ver guía de uso</span><lucide-icon name="chevron-right" size="18" style="color:var(--fg-faint)"></lucide-icon></div>
+              <div style="display:flex;align-items:center;gap:13px;padding:14px 16px"><lucide-icon name="settings" size="19" style="color:var(--primary)"></lucide-icon><span style="flex:1;font-size:14px;font-weight:500;color:var(--fg)">Configuración</span><lucide-icon name="chevron-right" size="18" style="color:var(--fg-faint)"></lucide-icon></div>
+            </div>
+            <button onClick="{{ logout }}" style="width:100%;margin-top:16px;padding:13px;border:1px solid var(--border);border-radius:13px;background:var(--bg-elev);color:var(--danger);font-size:13.5px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px"><lucide-icon name="log-out" size="17"></lucide-icon>Cerrar sesión</button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showTrfPanel }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;overflow-y:auto;background:var(--bg);padding:14px 18px 24px">
+            <div style="display:flex;align-items:center;gap:11px">
+              <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--info),#2C5E78);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:15px;flex:none">PM</div>
+              <div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:700;color:var(--fg)">Pedro Maldonado</div><div style="display:flex;align-items:center;gap:4px;font-size:11.5px;color:var(--fg-muted)"><span style="font-family:var(--font-mono)">Línea 2</span> · <lucide-icon name="star" size="12" style="color:var(--warning)"></lucide-icon>4,8</div></div>
+              <button data-tour="help" onClick="{{ startTour }}" title="Ver guía" style="width:38px;height:38px;border-radius:50%;background:var(--bg-elev);border:1px solid var(--border);color:var(--fg-muted);display:flex;align-items:center;justify-content:center;cursor:pointer"><lucide-icon name="help-circle" size="19"></lucide-icon></button>
+            </div>
+            <div data-tour="route" style="margin-top:16px;background:{{ routeCardBg }};border:1px solid {{ routeCardBorder }};border-radius:16px;padding:16px;display:flex;align-items:center;gap:13px;transition:background .2s,border-color .2s">
+              <div style="width:46px;height:46px;border-radius:50%;background:{{ routeDotBg }};display:flex;align-items:center;justify-content:center;flex:none"><lucide-icon name="bus" size="22" style="color:{{ routeIconC }}"></lucide-icon></div>
+              <div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:700;color:var(--fg)">{{ routeLabel }}</div><div style="font-size:12px;color:var(--fg-muted)">{{ routeSub }}</div></div>
+              <button onClick="{{ toggleRoute }}" style="width:52px;height:30px;border-radius:999px;border:none;cursor:pointer;background:{{ routeSwitchBg }};position:relative;transition:background .2s;flex:none"><span style="position:absolute;top:3px;left:{{ routeKnobLeft }};width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:left .2s"></span></button>
+            </div>
+            <div style="margin-top:13px;background:var(--bg-elev);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:var(--shadow-card)">
+              <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-faint)">Recaudado hoy</div>
+              <div style="font-family:var(--font-display);font-size:32px;font-weight:700;letter-spacing:-0.02em;color:var(--fg);margin-top:3px">Bs 210,00</div>
+              <div style="display:flex;gap:18px;margin-top:10px;padding-top:12px;border-top:1px solid var(--border)">
+                <div><div style="font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--fg)">60</div><div style="font-size:11px;color:var(--fg-muted)">Pasajeros</div></div>
+                <div><div style="font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--fg)">7</div><div style="font-size:11px;color:var(--fg-muted)">Vueltas</div></div>
+                <div><div style="font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--fg)">5,5 h</div><div style="font-size:11px;color:var(--fg-muted)">En ruta</div></div>
+              </div>
+            </div>
+            <div style="margin-top:13px;background:var(--bg-elev);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:var(--shadow-card);display:flex;align-items:center;gap:13px">
+              <div style="width:44px;height:44px;border-radius:12px;background:var(--info-soft);display:flex;align-items:center;justify-content:center;flex:none"><lucide-icon name="map-pin" size="22" style="color:var(--info)"></lucide-icon></div>
+              <div style="flex:1"><div style="font-size:11px;color:var(--fg-muted)">Parada actual</div><div style="font-size:14px;font-weight:700;color:var(--fg)">Av. Circunvalación</div></div>
+              <div style="text-align:right"><div style="font-size:11px;color:var(--fg-muted)">Siguiente</div><div style="font-size:13px;font-weight:600;color:var(--fg)">Cementerio</div></div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showTrfEarn }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;overflow-y:auto;background:var(--bg);padding:16px 18px 24px">
+            <div style="font-family:var(--font-display);font-size:21px;font-weight:700;letter-spacing:-0.02em;color:var(--fg);margin:6px 0 14px">Ganancias</div>
+            <div style="background:linear-gradient(135deg,var(--info),#2C5E78);border-radius:18px;padding:18px;color:#fff">
+              <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;opacity:.85">Esta semana</div>
+              <div style="font-family:var(--font-display);font-size:34px;font-weight:700;letter-spacing:-0.02em;margin-top:3px">Bs 1.180,00</div>
+              <div style="display:flex;gap:20px;margin-top:12px;padding-top:13px;border-top:1px solid rgba(255,255,255,.2)">
+                <div><div style="font-size:17px;font-weight:700">338</div><div style="font-size:11px;opacity:.85">Pasajeros</div></div>
+                <div><div style="font-size:17px;font-weight:700">Bs 3,5</div><div style="font-size:11px;opacity:.85">Tarifa</div></div>
+                <div><div style="font-size:17px;font-weight:700">42</div><div style="font-size:11px;opacity:.85">Vueltas</div></div>
+              </div>
+            </div>
+            <div style="margin-top:16px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-muted);font-weight:600;margin-bottom:10px">Movimientos recientes</div>
+            <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow-card)">
+              <div style="display:flex;align-items:center;gap:11px;padding:13px 15px;border-bottom:1px solid var(--border)"><div style="width:34px;height:34px;border-radius:9px;background:var(--info-soft);display:flex;align-items:center;justify-content:center"><lucide-icon name="bus" size="17" style="color:var(--info)"></lucide-icon></div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--fg)">Vuelta completa · Línea 2</div><div style="font-size:11px;color:var(--fg-muted)">Hoy 13:50 · 9 pasajeros</div></div><span style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--primary)">+31,50</span></div>
+              <div style="display:flex;align-items:center;gap:11px;padding:13px 15px;border-bottom:1px solid var(--border)"><div style="width:34px;height:34px;border-radius:9px;background:var(--info-soft);display:flex;align-items:center;justify-content:center"><lucide-icon name="bus" size="17" style="color:var(--info)"></lucide-icon></div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--fg)">Vuelta completa · Línea 2</div><div style="font-size:11px;color:var(--fg-muted)">Hoy 12:20 · 11 pasajeros</div></div><span style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--primary)">+38,50</span></div>
+              <div style="display:flex;align-items:center;gap:11px;padding:13px 15px"><div style="width:34px;height:34px;border-radius:9px;background:var(--danger-soft);display:flex;align-items:center;justify-content:center"><lucide-icon name="arrow-up-right" size="17" style="color:var(--danger)"></lucide-icon></div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--fg)">Cuota semanal de la línea</div><div style="font-size:11px;color:var(--fg-muted)">Lun 07:00</div></div><span style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--danger)">-25,00</span></div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showTrfLine }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;overflow-y:auto;background:var(--bg);padding:16px 18px 24px">
+            <div style="font-family:var(--font-display);font-size:21px;font-weight:700;letter-spacing:-0.02em;color:var(--fg);margin:6px 0 4px">Mi línea</div>
+            <div style="font-size:12.5px;color:var(--fg-muted);margin-bottom:16px">Sindicato de Trufis · Línea 2</div>
+            <div style="background:var(--bg-elev);border:1px solid var(--warning);border-radius:16px;padding:16px;box-shadow:var(--shadow-card)">
+              <div style="display:flex;align-items:center;gap:9px;margin-bottom:11px"><div style="width:36px;height:36px;border-radius:10px;background:var(--warning-soft);display:flex;align-items:center;justify-content:center"><lucide-icon name="receipt" size="19" style="color:var(--warning)"></lucide-icon></div><div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--fg)">Cuota semanal</div><div style="font-size:11.5px;color:var(--fg-muted)">Vence el lunes 30 de junio</div></div></div>
+              <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:var(--font-display);font-size:26px;font-weight:700;color:var(--fg)">Bs 25,00</span><span style="font-size:11px;color:var(--warning);font-weight:600">Pendiente</span></div>
+              <button onClick="{{ payDues }}" style="width:100%;margin-top:13px;padding:13px;border:none;border-radius:12px;background:var(--primary);color:#fff;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px"><lucide-icon name="qr-code" size="17" style="color:#fff"></lucide-icon>Pagar cuota con QR</button>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:14px">
+              <div style="flex:1;background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:13px;box-shadow:var(--shadow-card)"><div style="display:flex;align-items:center;gap:6px;color:var(--fg-muted)"><lucide-icon name="clock" size="15" style="color:var(--info)"></lucide-icon><span style="font-size:11px">Horario</span></div><div style="font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--fg);margin-top:5px">06:00–21:30</div></div>
+              <div style="flex:1;background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:13px;box-shadow:var(--shadow-card)"><div style="display:flex;align-items:center;gap:6px;color:var(--fg-muted)"><lucide-icon name="users" size="15" style="color:var(--info)"></lucide-icon><span style="font-size:11px">Choferes</span></div><div style="font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--fg);margin-top:5px">18 activos</div></div>
+            </div>
+            <div style="margin-top:18px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-muted);font-weight:600;margin-bottom:10px">Estado de cuenta</div>
+            <div style="display:flex;gap:10px">
+              <div style="flex:1;background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:13px;box-shadow:var(--shadow-card)"><div style="font-size:11px;color:var(--fg-muted)">Aportado en 2026</div><div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--fg);margin-top:4px">Bs 600,00</div></div>
+              <div style="flex:1;background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:13px;box-shadow:var(--shadow-card)"><div style="font-size:11px;color:var(--fg-muted)">Saldo pendiente</div><div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--warning);margin-top:4px">Bs 25,00</div></div>
+            </div>
+            <div style="margin-top:13px;background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow-card)">
+              <div style="display:flex;align-items:center;gap:11px;padding:12px 15px;border-bottom:1px solid var(--border)"><div style="width:32px;height:32px;border-radius:9px;background:var(--primary-soft);display:flex;align-items:center;justify-content:center"><lucide-icon name="receipt" size="16" style="color:var(--primary)"></lucide-icon></div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--fg)">Cuota ordinaria · semana 24</div><div style="font-size:11px;color:var(--fg-muted)">Pagado · 23 jun · QR</div></div><span style="font-family:var(--font-mono);font-size:12.5px;font-weight:700;color:var(--primary)">Bs 25,00</span></div>
+              <div style="display:flex;align-items:center;gap:11px;padding:12px 15px"><div style="width:32px;height:32px;border-radius:9px;background:var(--warning-soft);display:flex;align-items:center;justify-content:center"><lucide-icon name="gift" size="16" style="color:var(--warning)"></lucide-icon></div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--fg)">Aporte extraordinario · aniversario</div><div style="font-size:11px;color:var(--fg-muted)">Pendiente · vence 30 jun</div></div><span style="font-family:var(--font-mono);font-size:12.5px;font-weight:700;color:var(--warning)">Bs 25,00</span></div>
+            </div>
+            <div style="margin-top:18px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-muted);font-weight:600;margin-bottom:10px">Recorrido de la línea</div>
+            <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow-card);font-size:13px;color:var(--fg);line-height:1.7">Plaza principal → Hospital Cotoca → Av. Circunvalación → Cementerio → Terminal Bimodal</div>
+            <div style="margin-top:18px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-muted);font-weight:600;margin-bottom:10px">Dirigentes de la línea</div>
+            <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow-card)">
+              <div style="display:flex;align-items:center;gap:11px;padding:12px 15px;border-bottom:1px solid var(--border)"><div style="width:34px;height:34px;border-radius:50%;background:var(--info-soft);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--info)">JS</div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--fg)">Jorge Salvatierra</div><div style="font-size:11px;color:var(--fg-muted)">Dirigente · Línea 2</div></div><lucide-icon name="phone" size="17" style="color:var(--primary)"></lucide-icon></div>
+              <div style="display:flex;align-items:center;gap:11px;padding:12px 15px"><div style="width:34px;height:34px;border-radius:50%;background:var(--info-soft);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--info)">CD</div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--fg)">Carla Durán</div><div style="font-size:11px;color:var(--fg-muted)">Control de turnos</div></div><lucide-icon name="phone" size="17" style="color:var(--primary)"></lucide-icon></div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showTrfProfile }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;overflow-y:auto;background:var(--bg);padding:20px 18px 24px">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:11px">
+              <div style="position:relative"><div style="width:78px;height:78px;border-radius:50%;background:linear-gradient(135deg,var(--info),#2C5E78);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:26px">PM</div><div style="position:absolute;bottom:0;right:0;width:24px;height:24px;border-radius:50%;background:var(--primary);border:2px solid var(--bg);display:flex;align-items:center;justify-content:center"><lucide-icon name="check" size="13" style="color:#fff"></lucide-icon></div></div>
+              <div style="text-align:center"><div style="font-family:var(--font-display);font-size:19px;font-weight:700;color:var(--fg)">Pedro Maldonado</div><div style="font-size:12.5px;color:var(--fg-muted);margin-top:2px">Chofer N.° 23 · Línea 2 · Verificado</div></div>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:18px">
+              <div style="flex:1;background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:13px;text-align:center;box-shadow:var(--shadow-card)"><div style="font-family:var(--font-display);font-size:21px;font-weight:700;color:var(--fg);display:flex;align-items:center;justify-content:center;gap:3px">4,8<lucide-icon name="star" size="16" style="color:var(--warning)"></lucide-icon></div><div style="font-size:11px;color:var(--fg-muted);margin-top:2px">Calificación</div></div>
+              <div style="flex:1;background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:13px;text-align:center;box-shadow:var(--shadow-card)"><div style="font-family:var(--font-display);font-size:21px;font-weight:700;color:var(--fg)">4 años</div><div style="font-size:11px;color:var(--fg-muted);margin-top:2px">En la línea</div></div>
+            </div>
+            <div style="margin-top:16px;background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow-card)">
+              <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-muted);font-weight:600;margin-bottom:10px">Mi trufi</div>
+              <div style="display:flex;align-items:center;gap:12px"><div style="width:42px;height:42px;border-radius:11px;background:var(--info-soft);display:flex;align-items:center;justify-content:center"><lucide-icon name="bus" size="22" style="color:var(--info)"></lucide-icon></div><div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--fg)">Toyota Hiace · Blanco</div><div style="font-family:var(--font-mono);font-size:12px;color:var(--fg-muted)">Placa 318-TRF · 12 pasajeros</div></div></div>
+            </div>
+            <div style="margin-top:14px;background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow-card)">
+              <div style="display:flex;align-items:center;gap:13px;padding:14px 16px;border-bottom:1px solid var(--border)"><lucide-icon name="file-text" size="19" style="color:var(--primary)"></lucide-icon><span style="flex:1;font-size:14px;font-weight:500;color:var(--fg)">Documentos y licencia</span><lucide-icon name="chevron-right" size="18" style="color:var(--fg-faint)"></lucide-icon></div>
+              <div onClick="{{ startTour }}" style="display:flex;align-items:center;gap:13px;padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer"><lucide-icon name="help-circle" size="19" style="color:var(--primary)"></lucide-icon><span style="flex:1;font-size:14px;font-weight:500;color:var(--fg)">Ver guía de uso</span><lucide-icon name="chevron-right" size="18" style="color:var(--fg-faint)"></lucide-icon></div>
+              <div style="display:flex;align-items:center;gap:13px;padding:14px 16px"><lucide-icon name="settings" size="19" style="color:var(--primary)"></lucide-icon><span style="flex:1;font-size:14px;font-weight:500;color:var(--fg)">Configuración</span><lucide-icon name="chevron-right" size="18" style="color:var(--fg-faint)"></lucide-icon></div>
+            </div>
+            <button onClick="{{ logout }}" style="width:100%;margin-top:16px;padding:13px;border:1px solid var(--border);border-radius:13px;background:var(--bg-elev);color:var(--danger);font-size:13.5px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px"><lucide-icon name="log-out" size="17"></lucide-icon>Cerrar sesión</button>
+          </div>
+        </sc-if>
+
+      </div>
+
+      <sc-if value="{{ showPaxTabs }}" hint-placeholder-val="{{ false }}">
+        <div data-tour="tabs" style="flex:none;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;padding:8px 8px 6px;background:var(--bg-elev);border-top:1px solid var(--border);z-index:6">
+          <button onClick="{{ goPaxHome }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:transparent;border:none;cursor:pointer;font-size:10px;font-weight:600;padding:4px 0;color:{{ navHomeC }}"><lucide-icon name="navigation" size="21"></lucide-icon>Inicio</button>
+          <button onClick="{{ goPaxTrips }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:transparent;border:none;cursor:pointer;font-size:10px;font-weight:600;padding:4px 0;color:{{ navTripsC }}"><lucide-icon name="route" size="21"></lucide-icon>Viajes</button>
+          <button onClick="{{ goPaxNews }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:transparent;border:none;cursor:pointer;font-size:10px;font-weight:600;padding:4px 0;color:{{ navNewsC }}"><lucide-icon name="megaphone" size="21"></lucide-icon>Noticias</button>
+          <button onClick="{{ goPaxProfile }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:transparent;border:none;cursor:pointer;font-size:10px;font-weight:600;padding:4px 0;color:{{ navPaxProfC }}"><lucide-icon name="user" size="21"></lucide-icon>Perfil</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showDrvTabs }}" hint-placeholder-val="{{ false }}">
+        <div data-tour="tabs" style="flex:none;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;padding:8px 8px 6px;background:var(--bg-elev);border-top:1px solid var(--border);z-index:6">
+          <button onClick="{{ goDrvPanel }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:transparent;border:none;cursor:pointer;font-size:10px;font-weight:600;padding:4px 0;color:{{ navPanelC }}"><lucide-icon name="layout-dashboard" size="21"></lucide-icon>Panel</button>
+          <button onClick="{{ goDrvEarn }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:transparent;border:none;cursor:pointer;font-size:10px;font-weight:600;padding:4px 0;color:{{ navEarnC }}"><lucide-icon name="wallet" size="21"></lucide-icon>Ganancias</button>
+          <button onClick="{{ goDrvUnion }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:transparent;border:none;cursor:pointer;font-size:10px;font-weight:600;padding:4px 0;color:{{ navUnionC }}"><lucide-icon name="users" size="21"></lucide-icon>Sindicato</button>
+          <button onClick="{{ goDrvProfile }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:transparent;border:none;cursor:pointer;font-size:10px;font-weight:600;padding:4px 0;color:{{ navDrvProfC }}"><lucide-icon name="user" size="21"></lucide-icon>Perfil</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showTrfTabs }}" hint-placeholder-val="{{ false }}">
+        <div data-tour="tabs" style="flex:none;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;padding:8px 8px 6px;background:var(--bg-elev);border-top:1px solid var(--border);z-index:6">
+          <button onClick="{{ goTrfPanel }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:transparent;border:none;cursor:pointer;font-size:10px;font-weight:600;padding:4px 0;color:{{ navTrfRouteC }}"><lucide-icon name="bus" size="21"></lucide-icon>Ruta</button>
+          <button onClick="{{ goTrfEarn }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:transparent;border:none;cursor:pointer;font-size:10px;font-weight:600;padding:4px 0;color:{{ navTrfEarnC }}"><lucide-icon name="wallet" size="21"></lucide-icon>Ganancias</button>
+          <button onClick="{{ goTrfLine }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:transparent;border:none;cursor:pointer;font-size:10px;font-weight:600;padding:4px 0;color:{{ navTrfLineC }}"><lucide-icon name="route" size="21"></lucide-icon>Línea</button>
+          <button onClick="{{ goTrfProfile }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:transparent;border:none;cursor:pointer;font-size:10px;font-weight:600;padding:4px 0;color:{{ navTrfProfC }}"><lucide-icon name="user" size="21"></lucide-icon>Perfil</button>
+        </div>
+      </sc-if>
+
+      <div style="flex:none;height:20px;display:flex;align-items:center;justify-content:center;background:var(--bg-elev)"><div style="width:118px;height:5px;border-radius:3px;background:var(--fg);opacity:.26"></div></div>
+
+      <sc-if value="{{ sos }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:70;background:rgba(12,13,16,.6);display:flex;align-items:flex-end">
+          <div style="width:100%;background:var(--bg-elev);border-radius:22px 22px 35px 35px;padding:24px 22px 30px;animation:mc-sheet .22s var(--ease-out)">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center">
+              <div style="width:60px;height:60px;border-radius:50%;background:var(--danger-soft);display:flex;align-items:center;justify-content:center"><lucide-icon name="shield-alert" size="30" style="color:var(--danger)"></lucide-icon></div>
+              <div style="font-family:var(--font-display);font-size:19px;font-weight:700;color:var(--fg)">Enviar alerta SOS</div>
+              <p style="font-size:13px;color:var(--fg-muted);margin:0;line-height:1.5">Se compartirá tu ubicación en vivo con la central de la asociación y tus contactos de emergencia.</p>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:20px">
+              <button onClick="{{ confirmSos }}" style="width:100%;padding:14px;border:none;border-radius:13px;background:var(--danger);color:#fff;font-size:14px;font-weight:700;cursor:pointer">Confirmar emergencia</button>
+              <button onClick="{{ closeSos }}" style="width:100%;padding:13px;border:none;border-radius:13px;background:var(--bg-soft);color:var(--fg);font-size:13px;font-weight:600;cursor:pointer">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:50%;bottom:92px;transform:translateX(-50%);z-index:65;background:#0c0d10;color:#fff;font-size:12.5px;font-weight:500;padding:11px 16px;border-radius:999px;box-shadow:0 8px 20px rgba(0,0,0,.3);display:flex;align-items:center;gap:8px;white-space:nowrap;animation:mc-toast .2s var(--ease-out)"><lucide-icon name="check-circle-2" size="15" style="color:var(--primary)"></lucide-icon>{{ toast }}</div>
+      </sc-if>
+
+      {{ tourLayer }}
+
+    </div>
+  </div>
+
+  <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-faint)">{{ screenLabel }}</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:434,&quot;height&quot;:880},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#76BC4A&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;autoTour&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;startMode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;login&quot;,&quot;options&quot;:[&quot;login&quot;,&quot;pasajero&quot;,&quot;conductor&quot;,&quot;trufi&quot;],&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    const p=this.props||{};
+    let role=null, view='login';
+    if(p.startMode==='pasajero'){role='pax';view='pax.home';}
+    else if(p.startMode==='conductor'){role='drv';view='drv.panel';}
+    else if(p.startMode==='trufi'){role='trf';view='trf.panel';}
+    let theme='light';
+    try{ const s=localStorage.getItem('mc_theme'); if(s==='light'||s==='dark') theme=s; }catch(e){}
+    this.state={ theme, role, view, service:'moto', selectedLine:null, lineStops:[], onRoute:false, online:false, incoming:false, found:false, payMethod:'qr', tour:{active:false,i:0}, spot:null, sos:false, toast:null };
+    this.screenRef=React.createRef();
+    this.timers=[];
+  }
+  componentDidMount(){ this.measureTour(); this._rs=()=>this.measureTour(); window.addEventListener('resize',this._rs); if(this.state.role && (this.props&&this.props.autoTour!==false)) this.later(()=>this.startTour(),500); }
+  componentDidUpdate(){ this.measureTour(); }
+  componentWillUnmount(){ this.timers.forEach(clearTimeout); window.removeEventListener('resize',this._rs); }
+  later(fn,ms){ const t=setTimeout(fn,ms); this.timers.push(t); return t; }
+  rgba(hex,a){ try{ hex=String(hex).replace('#',''); if(hex.length===3) hex=hex.split('').map(c=>c+c).join(''); const r=parseInt(hex.slice(0,2),16),g=parseInt(hex.slice(2,4),16),b=parseInt(hex.slice(4,6),16); return 'rgba('+r+','+g+','+b+','+a+')'; }catch(e){ return 'rgba(118,188,74,'+a+')'; } }
+
+  setTheme(t){ try{localStorage.setItem('mc_theme',t);}catch(e){} this.setState({theme:t}); }
+  toast(msg){ this.setState({toast:msg}); this.later(()=>this.setState(s=>(s.toast===msg?{toast:null}:null)),2600); }
+
+  chooseRole(r){ const v = r==='pax'?'pax.home':(r==='trf'?'trf.panel':'drv.panel'); this.endTour(); this.setState({role:r, view:v, online:false, onRoute:false, incoming:false, found:false}); if(this.props&&this.props.autoTour!==false) this.later(()=>this.startTour(),550); }
+  switchRole(){ const order=['pax','drv','trf']; const i=order.indexOf(this.state.role); this.chooseRole(order[(i+1)%order.length]); }
+  logout(){ this.endTour(); this.setState({role:null, view:'login'}); }
+
+  setTab(v){ this.endTour(); this.setState({view:v}); }
+  go(v){ this.setState({view:v}); }
+
+  requestRide(){ this.endTour(); this.setState({view:'pax.finding', found:false}); this.later(()=>{ if(this.state.view==='pax.finding') this.setState({found:true}); },2400); }
+  startTrip(){ this.setState({view:'pax.trip'}); }
+  finishTrip(){ this.setState({view:'pax.pay'}); }
+  payNow(){ this.setState({view:'pax.rate'}); this.toast(this.state.payMethod==='qr'?'Pago QR confirmado · Bs 12,00':'Cobro en efectivo · Bs 12,00'); }
+  finishRate(){ this.setState({view:'pax.home', found:false}); this.toast('¡Gracias por viajar con MueveCotoca!'); }
+
+  toggleOnline(){ const on=!this.state.online; this.setState({online:on, incoming:false}); if(on){ this.toast('Estás en línea · recibiendo solicitudes'); this.later(()=>{ if(this.state.online && this.state.view==='drv.panel') this.setState({incoming:true}); },3200);} else { this.toast('Sin conexión · no recibirás viajes'); } }
+  acceptRide(){ this.endTour(); this.setState({incoming:false, view:'drv.active'}); }
+  declineRide(){ this.setState({incoming:false}); this.later(()=>{ if(this.state.online && this.state.view==='drv.panel') this.setState({incoming:true}); },4500); }
+  completeRide(){ this.setState({view:'drv.panel'}); this.toast('Viaje completado · Bs 12,00 cobrado'); }
+
+  setPay(m){ this.setState({payMethod:m}); }
+  payDues(){ this.toast('Cuota del sindicato pagada · Bs 20,00'); }
+  setService(x){ this.setState({service:x}); }
+  trufiLines(){ return [
+    {id:1,name:'Línea 1',route:'Centro – Barrio Lindo',fare:'Bs 3,00',schedule:'05:30 – 22:00',eta:'3 min',stops:['Plaza 24 de Septiembre','Mercado Central','Av. Virgen de Cotoca','Surtidor Norte','Barrio Lindo']},
+    {id:2,name:'Línea 2',route:'Plaza – Terminal Bimodal',fare:'Bs 3,50',schedule:'06:00 – 21:30',eta:'7 min',stops:['Plaza principal','Hospital Cotoca','Av. Circunvalación','Cementerio','Terminal Bimodal']},
+    {id:3,name:'Línea 3',route:'Mercado – Hospital – UAGRM',fare:'Bs 3,00',schedule:'05:00 – 23:00',eta:'1 min',stops:['Mercado Central','Iglesia','Coliseo','Hospital Cotoca','UAGRM Cotoca']}
+  ]; }
+  openLine(line){ this.endTour(); const stops=(line.stops||[]).map((nm,i)=>({name:nm, isCurrent:i===2, dotColor:i<=2?'var(--info)':'var(--border-2)', nameColor:i===2?'var(--fg)':'var(--fg-muted)', nameWeight:i===2?'700':'500'})); this.setState({selectedLine:line, lineStops:stops, view:'pax.trufiLine'}); }
+  boardTrufi(){ const L=this.state.selectedLine||{}; this.toast('Sigue la '+(L.name||'línea')+' · próximo en '+(L.eta||'pocos min')); }
+  toggleRoute(){ const on=!this.state.onRoute; this.setState({onRoute:on}); this.toast(on?'Recorrido iniciado · Línea 2':'Recorrido finalizado'); }
+  openSos(){ this.setState({sos:true}); }
+  closeSos(){ this.setState({sos:false}); }
+  confirmSos(){ this.setState({sos:false}); this.toast('Alerta SOS enviada a la central'); }
+
+  tourSteps(){
+    if(this.state.role==='trf'){
+      return [
+        {title:'Bienvenido, chofer de trufi', text:'Este es tu panel de ruta. Te muestro lo esencial en unos segundos.'},
+        {key:'route', title:'Inicia tu recorrido', text:'Actívalo al salir en tu línea para registrar tus vueltas y pasajeros.'},
+        {key:'tabs', title:'Navegación', text:'Ruta, Ganancias, tu Línea (cuotas y choferes) y tu Perfil.'},
+        {key:'help', title:'¡Listo!', text:'Puedes repetir esta guía cuando quieras desde este botón.'}
+      ];
+    }
+    if(this.state.role==='drv'){
+      return [
+        {title:'Bienvenido, conductor', text:'Este es tu Panel. Te muestro lo esencial en unos segundos.'},
+        {key:'online', title:'Conéctate', text:'Activa tu disponibilidad para empezar a recibir solicitudes de viaje cercanas.'},
+        {key:'earn', title:'Ganancias de hoy', text:'Controla en vivo cuánto llevas ganado y los viajes completados.'},
+        {key:'requests', title:'Solicitudes', text:'Cuando estás en línea, las nuevas solicitudes aparecen aquí para aceptarlas con un toque.'},
+        {key:'sos', title:'Botón SOS', text:'Tu seguridad primero: alerta a la asociación y a tus contactos ante cualquier riesgo.'},
+        {key:'tabs', title:'Navegación', text:'Panel, Ganancias, Sindicato (cuotas y socios) y tu Perfil.'},
+        {key:'help', title:'¡Listo!', text:'Puedes repetir esta guía cuando quieras desde este botón.'}
+      ];
+    }
+    return [
+      {title:'Te damos la bienvenida', text:'Este es tu panel principal. Te muestro lo esencial en unos segundos.'},
+      {key:'service', title:'Elige tu servicio', text:'Cambia entre Mototaxi y Trufi según cómo quieras viajar.'},
+      {key:'map', title:'Tu ubicación', text:'El mapa muestra tu posición y los vehículos disponibles cerca de ti.'},
+      {key:'dest', title:'¿A dónde vas?', text:'Escribe tu destino para pedir un mototaxi al instante.'},
+      {key:'saved', title:'Lugares guardados', text:'Accede rápido a Casa, Trabajo o la plaza principal.'},
+      {key:'request', title:'Pedir mototaxi', text:'Confirma tu viaje y te asignamos al conductor más cercano de la asociación.'},
+      {key:'sos', title:'Botón SOS', text:'Ante una emergencia, alerta a la asociación y tus contactos al instante.'},
+      {key:'tabs', title:'Navegación', text:'Cambia entre Inicio, tus Viajes, Noticias del sindicato y tu Perfil.'},
+      {key:'help', title:'¡Listo!', text:'Puedes repetir esta guía cuando quieras desde este botón.'}
+    ];
+  }
+  startTour(){ this.setState({tour:{active:true,i:0}, spot:null}); }
+  endTour(){ if(this.state.tour.active) this.setState({tour:{active:false,i:0}, spot:null}); }
+  tourNext(){ const steps=this.tourSteps(); if(this.state.tour.i>=steps.length-1){ this.endTour(); } else { this.setState(s=>({tour:{active:true,i:s.tour.i+1}, spot:null})); } }
+  tourPrev(){ this.setState(s=>({tour:{active:true,i:Math.max(0,s.tour.i-1)}, spot:null})); }
+
+  measureTour(){
+    if(!this.state.tour.active) return;
+    const screen=this.screenRef.current; if(!screen) return;
+    const steps=this.tourSteps(); const step=steps[this.state.tour.i]; if(!step) return;
+    const sr=screen.getBoundingClientRect(); this._sw=sr.width; this._sh=sr.height;
+    let spot=null;
+    if(step.key){ const t=screen.querySelector('[data-tour="'+step.key+'"]'); if(t){ const tr=t.getBoundingClientRect(); spot={top:tr.top-sr.top,left:tr.left-sr.left,width:tr.width,height:tr.height}; } }
+    const c=this.state.spot;
+    const same=(!c&&!spot)||(c&&spot&&c.top===spot.top&&c.left===spot.left&&c.width===spot.width&&c.height===spot.height);
+    if(!same) this.setState({spot});
+  }
+
+  renderTour(){
+    const h=React.createElement;
+    const steps=this.tourSteps(); const i=this.state.tour.i; const step=steps[i]; if(!step) return null;
+    const spot=this.state.spot; const SW=this._sw||372; const SH=this._sh||694; const pad=7;
+    const kids=[];
+    if(spot){
+      kids.push(h('div',{key:'sp',style:{position:'absolute',top:spot.top-pad,left:spot.left-pad,width:spot.width+pad*2,height:spot.height+pad*2,borderRadius:14,boxShadow:'0 0 0 9999px rgba(12,13,16,.66)',border:'2px solid var(--primary)',pointerEvents:'none',transition:'top .2s var(--ease-out),left .2s var(--ease-out),width .2s var(--ease-out),height .2s var(--ease-out)'}}));
+    } else {
+      kids.push(h('div',{key:'bd',style:{position:'absolute',inset:0,background:'rgba(12,13,16,.66)',pointerEvents:'none'}}));
+    }
+    const tipW=278; let tipTop, tipLeft=(SW-tipW)/2, above=false;
+    if(spot){
+      const below = spot.top + spot.height/2 < SH/2;
+      tipLeft = Math.min(Math.max(8, spot.left + spot.width/2 - tipW/2), SW - tipW - 8);
+      if(below){ tipTop = spot.top + spot.height + pad + 12; } else { above=true; tipTop = spot.top - pad - 12; }
+    } else { tipTop = SH/2 - 80; }
+    const tip=h('div',{key:'tip',style:{position:'absolute',top:tipTop,left:tipLeft,width:tipW,transform:above?'translateY(-100%)':'none',background:'var(--bg-elev)',borderRadius:15,padding:'15px 16px 13px',boxShadow:'0 14px 36px rgba(12,13,16,.3)',pointerEvents:'auto'}},[
+      h('div',{key:'e',style:{fontFamily:'var(--font-mono)',fontSize:10,letterSpacing:'0.12em',textTransform:'uppercase',color:'var(--primary)',fontWeight:600,marginBottom:6}},'Guía · '+(i+1)+' / '+steps.length),
+      h('div',{key:'t',style:{fontFamily:'var(--font-display)',fontSize:16,fontWeight:700,color:'var(--fg)',letterSpacing:'-0.01em',marginBottom:5}},step.title),
+      h('div',{key:'x',style:{fontSize:12.5,lineHeight:1.5,color:'var(--fg-muted)'}},step.text),
+      h('div',{key:'d',style:{display:'flex',gap:4,marginTop:12,marginBottom:12}},steps.map((_,k)=>h('div',{key:k,style:{height:4,flex:1,borderRadius:2,background:k<=i?'var(--primary)':'var(--bg-soft)'}}))),
+      h('div',{key:'b',style:{display:'flex',alignItems:'center',gap:8}},[
+        h('button',{key:'s',onClick:()=>this.endTour(),style:{fontFamily:'inherit',fontSize:12,fontWeight:600,color:'var(--fg-faint)',background:'transparent',border:'none',cursor:'pointer',padding:'8px 2px'}},'Saltar'),
+        h('div',{key:'r',style:{marginLeft:'auto',display:'flex',gap:8}},[
+          i>0?h('button',{key:'p',onClick:()=>this.tourPrev(),style:{fontFamily:'inherit',fontSize:12,fontWeight:600,color:'var(--fg)',background:'var(--bg-soft)',border:'none',borderRadius:9,padding:'8px 14px',cursor:'pointer'}},'Anterior'):null,
+          h('button',{key:'n',onClick:()=>this.tourNext(),style:{fontFamily:'inherit',fontSize:12,fontWeight:700,color:'#fff',background:'var(--primary)',border:'none',borderRadius:9,padding:'8px 16px',cursor:'pointer'}},i===steps.length-1?'Entendido':'Siguiente')
+        ])
+      ])
+    ]);
+    kids.push(tip);
+    return h('div',{style:{position:'absolute',inset:0,zIndex:60,pointerEvents:'auto'}},kids);
+  }
+
+  renderVals(){
+    const s=this.state; const v=s.view;
+    const ac=(a)=>a?'var(--primary)':'var(--fg-faint)';
+    const accent=(this.props&&this.props.accent)||'#76BC4A';
+    const labels={ 'login':'01 · Acceso','pax.home':'Pasajero · Inicio','pax.trufiLine':'Pasajero · Línea de trufi','pax.finding':'Pasajero · Buscando','pax.trip':'Pasajero · En viaje','pax.pay':'Pasajero · Pago','pax.rate':'Pasajero · Calificar','pax.trips':'Pasajero · Mis viajes','pax.news':'Pasajero · Noticias','pax.profile':'Pasajero · Perfil','drv.panel':'Conductor · Panel','drv.active':'Conductor · En viaje','drv.earnings':'Conductor · Ganancias','drv.union':'Conductor · Sindicato','drv.profile':'Conductor · Perfil','trf.panel':'Chofer trufi · Ruta','trf.earnings':'Chofer trufi · Ganancias','trf.line':'Chofer trufi · Línea','trf.profile':'Chofer trufi · Perfil' };
+    const L=s.selectedLine||{};
+    const lines=this.trufiLines().map(x=>({...x, open:()=>this.openLine(x)}));
+    return {
+      theme:s.theme, accent, accentSoft:this.rgba(accent,0.12), accentSoftStrong:this.rgba(accent,0.20),
+      screenRef:this.screenRef, screenLabel:labels[v]||'MueveCotoca',
+      showLogin:v==='login',
+      showPaxHome:v==='pax.home', showTrufiLine:v==='pax.trufiLine', showPaxFinding:v==='pax.finding', showPaxTrip:v==='pax.trip', showPaxPay:v==='pax.pay', showPaxRate:v==='pax.rate', showPaxTrips:v==='pax.trips', showPaxNews:v==='pax.news', showPaxProfile:v==='pax.profile',
+      showDrvPanel:v==='drv.panel', showDrvActive:v==='drv.active', showDrvEarn:v==='drv.earnings', showDrvUnion:v==='drv.union', showDrvProfile:v==='drv.profile',
+      showTrfPanel:v==='trf.panel', showTrfEarn:v==='trf.earnings', showTrfLine:v==='trf.line', showTrfProfile:v==='trf.profile',
+      showPaxTabs:['pax.home','pax.trips','pax.news','pax.profile'].indexOf(v)>=0,
+      showDrvTabs:['drv.panel','drv.earnings','drv.union','drv.profile'].indexOf(v)>=0,
+      showTrfTabs:['trf.panel','trf.earnings','trf.line','trf.profile'].indexOf(v)>=0,
+      isMoto:s.service==='moto', isTrufi:s.service==='trufi',
+      motoSelBg:s.service==='moto'?'var(--bg-elev)':'transparent', motoSelC:s.service==='moto'?'var(--primary)':'var(--fg-muted)',
+      trufiSelBg:s.service==='trufi'?'var(--bg-elev)':'transparent', trufiSelC:s.service==='trufi'?'var(--info)':'var(--fg-muted)',
+      trufiLinesList:lines,
+      lineName:L.name||'Línea', lineRoute:L.route||'', lineFare:L.fare||'Bs 3,00', lineSchedule:L.schedule||'', lineEta:L.eta||'', lineStops:s.lineStops||[],
+      routeCardBg:s.onRoute?'var(--info-soft)':'var(--bg-elev)', routeCardBorder:s.onRoute?'var(--info)':'var(--border)',
+      routeDotBg:s.onRoute?'var(--info)':'var(--bg-soft)', routeIconC:s.onRoute?'#fff':'var(--fg-faint)',
+      routeSwitchBg:s.onRoute?'var(--info)':'var(--border-2)', routeKnobLeft:s.onRoute?'25px':'3px',
+      routeLabel:s.onRoute?'En recorrido':'Fuera de ruta', routeSub:s.onRoute?'Registrando pasajeros y vueltas':'Inicia para registrar tu recorrido',
+      navTrfRouteC:ac(v==='trf.panel'), navTrfEarnC:ac(v==='trf.earnings'), navTrfLineC:ac(v==='trf.line'), navTrfProfC:ac(v==='trf.profile'),
+      navHomeC:ac(v==='pax.home'), navTripsC:ac(v==='pax.trips'), navNewsC:ac(v==='pax.news'), navPaxProfC:ac(v==='pax.profile'),
+      navPanelC:ac(v==='drv.panel'), navEarnC:ac(v==='drv.earnings'), navUnionC:ac(v==='drv.union'), navDrvProfC:ac(v==='drv.profile'),
+      online:s.online, offline:!s.online, onlineLabel:s.online?'Estás en línea':'Sin conexión', onlineColor:s.online?'var(--primary)':'var(--fg-faint)',
+      onlineSub:s.online?'Recibiendo solicitudes cercanas':'Actívate para recibir viajes',
+      onlineCardBg:s.online?'var(--primary-soft)':'var(--bg-elev)', onlineCardBorder:s.online?'var(--primary)':'var(--border)',
+      onlineDotBg:s.online?'var(--primary)':'var(--bg-soft)', onlineIconC:s.online?'#fff':'var(--fg-faint)',
+      onlineSwitchBg:s.online?'var(--primary)':'var(--border-2)', onlineKnobLeft:s.online?'25px':'3px',
+      incoming:s.incoming, noIncoming:!s.incoming, found:s.found, notFound:!s.found,
+      idleIcon:s.online?'radar':'power-off', idleTitle:s.online?'Buscando solicitudes…':'Estás desconectado',
+      idleSub:s.online?'Te avisaremos cuando haya un viaje cerca':'Conéctate para empezar a recibir viajes',
+      payDues:()=>this.payDues(),
+      payEfectivo:s.payMethod==='efectivo', payQr:s.payMethod==='qr',
+      payEfBorder:s.payMethod==='efectivo'?'var(--primary)':'var(--border)', payEfBg:s.payMethod==='efectivo'?'var(--primary-soft)':'var(--bg-elev)',
+      payQrBorder:s.payMethod==='qr'?'var(--primary)':'var(--border)', payQrBg:s.payMethod==='qr'?'var(--primary-soft)':'var(--bg-elev)',
+      sos:s.sos, toast:s.toast, hasToast:!!s.toast,
+      tourLayer:s.tour.active?this.renderTour():null,
+      isPax:s.role==='pax', isDrv:s.role==='drv', isTrf:s.role==='trf',
+      paxSwBg:s.role==='pax'?'var(--bg-elev)':'transparent', paxSwC:s.role==='pax'?'var(--fg)':'var(--fg-muted)',
+      drvSwBg:s.role==='drv'?'var(--bg-elev)':'transparent', drvSwC:s.role==='drv'?'var(--fg)':'var(--fg-muted)',
+      trfSwBg:s.role==='trf'?'var(--bg-elev)':'transparent', trfSwC:s.role==='trf'?'var(--fg)':'var(--fg-muted)',
+      lightBtnBg:s.theme!=='dark'?'var(--primary-soft)':'transparent', lightBtnC:s.theme!=='dark'?'var(--primary)':'var(--fg-muted)',
+      darkBtnBg:s.theme==='dark'?'var(--primary-soft)':'transparent', darkBtnC:s.theme==='dark'?'var(--primary)':'var(--fg-muted)',
+      chooseRolePax:()=>this.chooseRole('pax'), chooseRoleDrv:()=>this.chooseRole('drv'), chooseRoleTrf:()=>this.chooseRole('trf'),
+      setServiceMoto:()=>this.setService('moto'), setServiceTrufi:()=>this.setService('trufi'),
+      boardTrufi:()=>this.boardTrufi(), toggleRoute:()=>this.toggleRoute(),
+      goTrfPanel:()=>this.setTab('trf.panel'), goTrfEarn:()=>this.setTab('trf.earnings'), goTrfLine:()=>this.setTab('trf.line'), goTrfProfile:()=>this.setTab('trf.profile'),
+      setLight:()=>this.setTheme('light'), setDark:()=>this.setTheme('dark'),
+      switchRole:()=>this.switchRole(), logout:()=>this.logout(), startTour:()=>this.startTour(),
+      goPaxHome:()=>this.setTab('pax.home'), goPaxTrips:()=>this.setTab('pax.trips'), goPaxNews:()=>this.setTab('pax.news'), goPaxProfile:()=>this.setTab('pax.profile'),
+      goDrvPanel:()=>this.setTab('drv.panel'), goDrvEarn:()=>this.setTab('drv.earnings'), goDrvUnion:()=>this.setTab('drv.union'), goDrvProfile:()=>this.setTab('drv.profile'),
+      requestRide:()=>this.requestRide(), startTrip:()=>this.startTrip(), finishTrip:()=>this.finishTrip(), payNow:()=>this.payNow(), finishRate:()=>this.finishRate(), cancelToHome:()=>this.setTab('pax.home'),
+      toggleOnline:()=>this.toggleOnline(), acceptRide:()=>this.acceptRide(), declineRide:()=>this.declineRide(), completeRide:()=>this.completeRide(), cancelToPanel:()=>this.setTab('drv.panel'),
+      setPayEf:()=>this.setPay('efectivo'), setPayQr:()=>this.setPay('qr'),
+      openSos:()=>this.openSos(), closeSos:()=>this.closeSos(), confirmSos:()=>this.confirmSos()
+    };
+  }
+}
+</script>
+</body>
+</html>
