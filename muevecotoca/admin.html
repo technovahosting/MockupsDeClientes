@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MueveCotoca — Panel de Administración (Mockup)</title>
+
+<!--
+  MueveCotoca — Mockup del Panel de Administración (web, escritorio)
+  Para la directiva de la Asociación de Mototaxis y Trufis de Cotoca.
+  HTML + CSS + JS plano, mismo lenguaje visual que las apps móviles.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<style>
+  :root {
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'IBM Plex Sans', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --primary: #76BC4A; --primary-hover: #5FA236;
+    --primary-soft: rgba(118,188,74,0.12);
+    --danger: #B83B2D;  --danger-soft: rgba(184,59,45,0.12);
+    --warning: #C68A1F; --warning-soft: rgba(198,138,31,0.14);
+    --info: #4A8FB8;    --info-soft: rgba(74,143,184,0.14);
+    --bg: #F8F7FA; --bg-elev: #FFFFFF; --bg-soft: #F1F0F2;
+    --fg: #2F2B3D; --fg-muted: #6F6B7D; --fg-faint: #A5A3AE;
+    --border: rgba(47,43,61,0.08); --border-2: rgba(47,43,61,0.16);
+    --shadow-card: 0 2px 6px rgba(47,43,61,0.06);
+    --stage: #E4E4E7; --stage-dot: rgba(47,43,61,0.10);
+    --side: #2F2B3D; --side-fg: #C9C5D6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: var(--font-body); color: var(--fg);
+    background-color: var(--stage);
+    background-image: radial-gradient(var(--stage-dot) 1.2px, transparent 1.2px);
+    background-size: 22px 22px;
+    min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+    gap: 18px; padding: 28px 20px 40px;
+  }
+  button { font-family: inherit; cursor: pointer; }
+  .i { width: 1em; height: 1em; display: inline-flex; }
+  svg.lucide { display: block; }
+  .mono { font-family: var(--font-mono); }
+  .muted { color: var(--fg-muted); }
+  .row { display: flex; align-items: center; gap: 11px; }
+  .grow { flex: 1; min-width: 0; }
+  .eyebrow { font-family: var(--font-mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-muted); font-weight: 600; }
+
+  .toolbar {
+    width: 1040px; max-width: 100%; display: flex; align-items: center; gap: 12px;
+    background: var(--bg-elev); border: 1px solid var(--border);
+    border-radius: 14px; padding: 10px 12px; box-shadow: var(--shadow-card);
+  }
+  .toolbar .logo { width: 34px; height: 34px; border-radius: 9px; background: var(--primary);
+    display: flex; align-items: center; justify-content: center; color: #fff; flex: none; }
+  .toolbar .name { font-family: var(--font-display); font-size: 14px; font-weight: 700; }
+  .toolbar .tag { font-family: var(--font-mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-faint); }
+  .toolbar a { font-size: 11px; font-weight: 600; color: var(--fg-muted); text-decoration: none;
+    border: 1px solid var(--border); border-radius: 999px; padding: 6px 11px; flex: none; }
+
+  /* marco de navegador */
+  .browser {
+    width: 1040px; max-width: 100%; background: var(--bg); border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--border-2);
+    box-shadow: 0 30px 60px -18px rgba(20,22,34,.35), 0 10px 22px rgba(20,22,34,.14);
+  }
+  .browser-bar { background: var(--bg-soft); padding: 10px 14px; display: flex; align-items: center; gap: 7px; border-bottom: 1px solid var(--border); }
+  .browser-bar .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .browser-bar .url { flex: 1; background: var(--bg-elev); border-radius: 7px; padding: 6px 13px; font-family: var(--font-mono); font-size: 11px; color: var(--fg-muted); margin-left: 8px; }
+
+  .stage-inner { display: flex; min-height: 620px; }
+  .login-wrap { flex: 1; display: flex; align-items: center; justify-content: center; background: linear-gradient(180deg, var(--primary-soft) 0%, var(--bg) 55%); }
+  .login-card { width: 350px; background: var(--bg-elev); border: 1px solid var(--border); border-radius: 18px; padding: 34px 30px; box-shadow: var(--shadow-card); text-align: center; }
+  .login-card .badge { width: 62px; height: 62px; border-radius: 17px; background: var(--primary); color: #fff;
+    display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; box-shadow: 0 10px 24px rgba(118,188,74,.38); }
+  .login-card h1 { font-family: var(--font-display); font-size: 21px; font-weight: 700; margin: 0 0 3px; }
+  .login-card p { font-size: 12.5px; color: var(--fg-muted); margin: 0 0 20px; }
+  .field { text-align: left; margin-bottom: 12px; }
+  .field .fake-input { background: var(--bg-soft); border: 1px solid var(--border); border-radius: 11px; padding: 12px 14px; font-size: 13.5px; color: var(--fg-muted); display: flex; align-items: center; gap: 9px; }
+  .btn { width: 100%; padding: 13px; border: none; border-radius: 12px; background: var(--primary); color: #fff; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .btn:hover { background: var(--primary-hover); }
+
+  .sidebar { width: 218px; flex: none; background: var(--side); color: var(--side-fg); display: flex; flex-direction: column; padding: 18px 0; }
+  .sidebar .brand { padding: 0 20px 16px; border-bottom: 1px solid rgba(255,255,255,.09); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+  .sidebar .brand .lg { width: 32px; height: 32px; border-radius: 9px; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; flex: none; }
+  .sidebar .brand b { font-family: var(--font-display); color: #fff; font-size: 14px; }
+  .nav-item { display: flex; align-items: center; gap: 11px; padding: 11px 20px; font-size: 13px; font-weight: 500; border: none; background: none; color: var(--side-fg); width: 100%; text-align: left; border-left: 3px solid transparent; }
+  .nav-item:hover { background: rgba(255,255,255,.05); }
+  .nav-item.on { background: rgba(118,188,74,.14); color: #fff; border-left-color: var(--primary); font-weight: 600; }
+  .sidebar .foot { margin-top: auto; padding: 14px 20px 2px; border-top: 1px solid rgba(255,255,255,.09); font-size: 11px; }
+
+  .content { flex: 1; padding: 26px 30px; overflow-y: auto; max-height: 620px; }
+  .content h2 { font-family: var(--font-display); font-size: 20px; font-weight: 700; margin: 0 0 3px; letter-spacing: -.02em; }
+  .content .sub { font-size: 12.5px; color: var(--fg-muted); margin: 0 0 20px; }
+
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 13px; margin-bottom: 20px; }
+  .kpi { background: var(--bg-elev); border: 1px solid var(--border); border-radius: 14px; padding: 15px; box-shadow: var(--shadow-card); }
+  .kpi .ico { width: 32px; height: 32px; border-radius: 9px; display: flex; align-items: center; justify-content: center; margin-bottom: 9px; }
+  .kpi .v { font-family: var(--font-display); font-size: 22px; font-weight: 700; letter-spacing: -.02em; }
+  .kpi .l { font-size: 11px; color: var(--fg-muted); margin-top: 2px; }
+  .kpi .d { font-size: 10.5px; font-weight: 700; color: var(--primary); margin-top: 5px; }
+
+  table { width: 100%; border-collapse: collapse; background: var(--bg-elev); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-card); }
+  th { text-align: left; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-faint); font-weight: 600; padding: 11px 15px; background: var(--bg-soft); border-bottom: 1px solid var(--border); }
+  td { padding: 12px 15px; font-size: 13px; border-bottom: 1px solid var(--border); }
+  tr:last-child td { border-bottom: none; }
+  .pill { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 10.5px; font-weight: 700; }
+  .pill.ok { background: var(--primary-soft); color: #4A8327; }
+  .pill.warn { background: var(--warning-soft); color: var(--warning); }
+  .pill.bad { background: var(--danger-soft); color: var(--danger); }
+  .pill.info { background: var(--info-soft); color: var(--info); }
+  .mini { border: none; border-radius: 8px; padding: 6px 11px; font-size: 11.5px; font-weight: 600; }
+  .mini.g { background: var(--primary-soft); color: #4A8327; }
+  .mini.r { background: var(--danger-soft); color: var(--danger); }
+  .mini.b { background: var(--info-soft); color: var(--info); }
+  .avatar-s { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), #36631B); color: #fff; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 10px; flex: none; }
+
+  .view { display: none; }
+  .view.on { display: block; animation: fade .2s ease; }
+  .view.on.login-wrap { display: flex; }
+  @keyframes fade { from { opacity: 0; transform: translateY(4px);} to { opacity: 1; transform: none;} }
+
+  .label-under { font-family: var(--font-mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-faint); }
+  .two-col { display: grid; grid-template-columns: 1.5fr 1fr; gap: 14px; align-items: start; }
+  .panel { background: var(--bg-elev); border: 1px solid var(--border); border-radius: 14px; padding: 16px; box-shadow: var(--shadow-card); }
+  .bars { display: flex; align-items: flex-end; gap: 8px; height: 120px; margin-top: 12px; }
+  .bars > div { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; height: 100%; justify-content: flex-end; }
+  .bars i { display: block; width: 100%; max-width: 26px; border-radius: 5px; background: var(--primary-soft); }
+  .bars i.hot { background: var(--primary); }
+  .bars span { font-size: 10px; color: var(--fg-muted); }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="logo"><i data-lucide="route" style="width:19px;height:19px"></i></div>
+  <div class="grow">
+    <div class="name">MueveCotoca</div>
+    <div class="tag">Panel de Administración · Asociación</div>
+  </div>
+  <a href="index.html">← Módulos</a>
+</div>
+
+<div class="browser">
+  <div class="browser-bar">
+    <span class="dot" style="background:#ff5f56"></span>
+    <span class="dot" style="background:#ffbd2e"></span>
+    <span class="dot" style="background:#27c93f"></span>
+    <div class="url">admin.muevecotoca.bo</div>
+  </div>
+  <div class="stage-inner" id="stage">
+
+    <!-- LOGIN -->
+    <div class="view on login-wrap" data-view="login" style="width:100%">
+      <div class="login-card">
+        <div class="badge"><i data-lucide="route" style="width:30px;height:30px"></i></div>
+        <h1>Panel de Administración</h1>
+        <p>Asociación de Mototaxis y Trufis · Cotoca</p>
+        <div class="field"><div class="eyebrow" style="margin-bottom:6px">Usuario</div>
+          <div class="fake-input"><i data-lucide="user" style="width:15px;height:15px"></i>directiva.cotoca</div></div>
+        <div class="field"><div class="eyebrow" style="margin-bottom:6px">Contraseña</div>
+          <div class="fake-input"><i data-lucide="lock" style="width:15px;height:15px"></i>••••••••••</div></div>
+        <button class="btn" onclick="go('resumen')">Ingresar<i data-lucide="arrow-right" style="width:16px;height:16px"></i></button>
+        <div style="font-size:10.5px;color:var(--fg-faint);margin-top:14px">Acceso exclusivo para la directiva de la asociación.</div>
+      </div>
+    </div>
+
+    <!-- LAYOUT CON SIDEBAR (todas las demás vistas) -->
+    <div class="view" data-view="app" style="width:100%">
+      <div class="stage-inner" style="min-height:620px">
+        <div class="sidebar">
+          <div class="brand"><div class="lg"><i data-lucide="route" style="width:17px;height:17px"></i></div><b>MueveCotoca</b></div>
+          <button class="nav-item on" data-nav="resumen" onclick="go('resumen')"><i data-lucide="layout-dashboard" style="width:17px;height:17px"></i>Resumen</button>
+          <button class="nav-item" data-nav="socios" onclick="go('socios')"><i data-lucide="users" style="width:17px;height:17px"></i>Socios</button>
+          <button class="nav-item" data-nav="cuotas" onclick="go('cuotas')"><i data-lucide="receipt" style="width:17px;height:17px"></i>Cuotas y pagos</button>
+          <button class="nav-item" data-nav="lineas" onclick="go('lineas')"><i data-lucide="bus" style="width:17px;height:17px"></i>Líneas de trufi</button>
+          <button class="nav-item" data-nav="avisos" onclick="go('avisos')"><i data-lucide="megaphone" style="width:17px;height:17px"></i>Avisos</button>
+          <div class="foot">
+            <div class="row" style="gap:9px"><div class="avatar-s">RA</div><div><div style="color:#fff;font-size:12px;font-weight:600">Roberto Áñez</div><div style="font-size:10px">Presidente</div></div></div>
+          </div>
+        </div>
+
+        <div class="content">
+
+          <!-- RESUMEN -->
+          <div class="view on" data-sub="resumen">
+            <h2>Resumen general</h2>
+            <p class="sub">Cómo va el servicio hoy · martes 2 de julio, 14:25</p>
+            <div class="cards">
+              <div class="kpi"><div class="ico" style="background:var(--primary-soft);color:var(--primary)"><i data-lucide="bike" style="width:17px;height:17px"></i></div><div class="v">42</div><div class="l">Mototaxistas activos</div><div class="d">↑ 3 esta semana</div></div>
+              <div class="kpi"><div class="ico" style="background:var(--info-soft);color:var(--info)"><i data-lucide="bus" style="width:17px;height:17px"></i></div><div class="v">18</div><div class="l">Choferes de trufi</div><div class="d">3 líneas en ruta</div></div>
+              <div class="kpi"><div class="ico" style="background:var(--primary-soft);color:var(--primary)"><i data-lucide="route" style="width:17px;height:17px"></i></div><div class="v">187</div><div class="l">Viajes hoy</div><div class="d">↑ 12% vs ayer</div></div>
+              <div class="kpi"><div class="ico" style="background:var(--warning-soft);color:var(--warning)"><i data-lucide="wallet" style="width:17px;height:17px"></i></div><div class="v">Bs 2.140</div><div class="l">Cuotas cobradas (mes)</div><div class="d">52 de 60 al día</div></div>
+            </div>
+            <div class="two-col">
+              <div class="panel">
+                <div class="eyebrow">Viajes por día · esta semana</div>
+                <div class="bars">
+                  <div><i style="height:46%"></i><span>L</span></div>
+                  <div><i style="height:62%"></i><span>M</span></div>
+                  <div><i style="height:54%"></i><span>M</span></div>
+                  <div><i style="height:78%"></i><span>J</span></div>
+                  <div><i class="hot" style="height:100%"></i><span>V</span></div>
+                  <div><i style="height:40%"></i><span>S</span></div>
+                  <div><i style="height:20%"></i><span>D</span></div>
+                </div>
+              </div>
+              <div class="panel">
+                <div class="eyebrow" style="margin-bottom:10px">Alertas recientes</div>
+                <div class="row" style="gap:9px;padding:8px 0;border-bottom:1px solid var(--border)"><span class="pill bad">SOS</span><div class="grow" style="font-size:12px">Alerta de Lucía V. · resuelta<br><span class="muted" style="font-size:10.5px">Ayer 21:40 · Av. Circunvalación</span></div></div>
+                <div class="row" style="gap:9px;padding:8px 0;border-bottom:1px solid var(--border)"><span class="pill warn">Cuota</span><div class="grow" style="font-size:12px">8 socios con cuota vencida<br><span class="muted" style="font-size:10.5px">Ver detalle en Cuotas y pagos</span></div></div>
+                <div class="row" style="gap:9px;padding:8px 0"><span class="pill info">Trufi</span><div class="grow" style="font-size:12px">Línea 3 sin chofer 14:00–16:00<br><span class="muted" style="font-size:10.5px">Turno descubierto</span></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SOCIOS -->
+          <div class="view" data-sub="socios">
+            <h2>Socios de la asociación</h2>
+            <p class="sub">60 socios registrados · 42 mototaxistas y 18 choferes de trufi</p>
+            <table>
+              <thead><tr><th>Socio</th><th>Tipo</th><th>Placa</th><th>Calificación</th><th>Estado</th><th>Acciones</th></tr></thead>
+              <tbody>
+                <tr><td><div class="row" style="gap:9px"><div class="avatar-s">JC</div>Juan Carlos Méndez · N.° 047</div></td><td>Mototaxi</td><td class="mono">152-ABC</td><td>⭐ 4,9</td><td><span class="pill ok">Activo</span></td><td><button class="mini r">Suspender</button></td></tr>
+                <tr><td><div class="row" style="gap:9px"><div class="avatar-s">PM</div>Pedro Maldonado · N.° 023</div></td><td>Trufi · Línea 2</td><td class="mono">318-TRF</td><td>⭐ 4,8</td><td><span class="pill ok">Activo</span></td><td><button class="mini r">Suspender</button></td></tr>
+                <tr><td><div class="row" style="gap:9px"><div class="avatar-s">RF</div>Rosa Fernández · N.° 031</div></td><td>Mototaxi</td><td class="mono">207-JKL</td><td>⭐ 4,6</td><td><span class="pill warn">Cuota vencida</span></td><td><button class="mini b">Recordar pago</button></td></tr>
+                <tr><td><div class="row" style="gap:9px"><div class="avatar-s">LG</div>Luis Gutiérrez · N.° 008</div></td><td>Mototaxi</td><td class="mono">089-DEF</td><td>⭐ 4,2</td><td><span class="pill bad">Suspendido</span></td><td><button class="mini g">Reactivar</button></td></tr>
+                <tr><td><div class="row" style="gap:9px"><div class="avatar-s">MF</div>María Flores · N.° 012</div></td><td>Trufi · Línea 1</td><td class="mono">244-TRF</td><td>⭐ 4,9</td><td><span class="pill ok">Activo</span></td><td><button class="mini r">Suspender</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- CUOTAS -->
+          <div class="view" data-sub="cuotas">
+            <h2>Cuotas y pagos</h2>
+            <p class="sub">Cuota semanal · semana del 30 jun al 6 jul</p>
+            <div class="cards" style="grid-template-columns:repeat(3,1fr)">
+              <div class="kpi"><div class="v">Bs 1.040</div><div class="l">Cobrado esta semana</div><div class="d">52 socios pagaron</div></div>
+              <div class="kpi"><div class="v" style="color:var(--warning)">Bs 160</div><div class="l">Pendiente de cobro</div><div class="d" style="color:var(--warning)">8 socios</div></div>
+              <div class="kpi"><div class="v">86%</div><div class="l">Cumplimiento</div><div class="d">↑ 4% vs semana pasada</div></div>
+            </div>
+            <table>
+              <thead><tr><th>Socio</th><th>Concepto</th><th>Monto</th><th>Vence</th><th>Estado</th><th>Acción</th></tr></thead>
+              <tbody>
+                <tr><td>Juan Carlos Méndez</td><td>Cuota semanal</td><td class="mono">Bs 20,00</td><td>06/07</td><td><span class="pill ok">Pagado · QR</span></td><td><button class="mini b">Ver recibo</button></td></tr>
+                <tr><td>Pedro Maldonado</td><td>Cuota semanal · trufi</td><td class="mono">Bs 25,00</td><td>06/07</td><td><span class="pill ok">Pagado · QR</span></td><td><button class="mini b">Ver recibo</button></td></tr>
+                <tr><td>Rosa Fernández</td><td>Cuota semanal</td><td class="mono">Bs 20,00</td><td>06/07</td><td><span class="pill warn">Pendiente</span></td><td><button class="mini g">Marcar pagado</button></td></tr>
+                <tr><td>Luis Gutiérrez</td><td>Multa · inasistencia asamblea</td><td class="mono">Bs 15,00</td><td>10/06</td><td><span class="pill bad">Vencido</span></td><td><button class="mini g">Marcar pagado</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- LINEAS -->
+          <div class="view" data-sub="lineas">
+            <h2>Líneas de trufi</h2>
+            <p class="sub">3 líneas registradas · seguimiento en vivo</p>
+            <table>
+              <thead><tr><th>Línea</th><th>Recorrido</th><th>Tarifa</th><th>Horario</th><th>En ruta ahora</th><th>Estado</th></tr></thead>
+              <tbody>
+                <tr><td><b>Línea 1</b></td><td>Centro – Barrio Lindo</td><td class="mono">Bs 3,00</td><td class="mono">05:30–22:00</td><td>4 trufis</td><td><span class="pill ok">Operando</span></td></tr>
+                <tr><td><b>Línea 2</b></td><td>Plaza – Terminal Bimodal</td><td class="mono">Bs 3,50</td><td class="mono">06:00–21:30</td><td>5 trufis</td><td><span class="pill ok">Operando</span></td></tr>
+                <tr><td><b>Línea 3</b></td><td>Mercado – Hospital – UAGRM</td><td class="mono">Bs 3,00</td><td class="mono">05:00–23:00</td><td>2 trufis</td><td><span class="pill warn">Turno descubierto</span></td></tr>
+              </tbody>
+            </table>
+            <div class="panel" style="margin-top:14px">
+              <div class="eyebrow" style="margin-bottom:8px">Pasajeros transportados hoy (todas las líneas)</div>
+              <div class="row" style="gap:22px">
+                <div><div style="font-family:var(--font-display);font-size:24px;font-weight:700">612</div><div class="muted" style="font-size:11px">Pasajeros</div></div>
+                <div><div style="font-family:var(--font-display);font-size:24px;font-weight:700">74</div><div class="muted" style="font-size:11px">Vueltas</div></div>
+                <div><div style="font-family:var(--font-display);font-size:24px;font-weight:700">Bs 2.050</div><div class="muted" style="font-size:11px">Recaudado</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AVISOS -->
+          <div class="view" data-sub="avisos">
+            <h2>Avisos a los socios</h2>
+            <p class="sub">Se publican en la sección Noticias de las apps</p>
+            <div class="panel" style="margin-bottom:14px">
+              <div class="eyebrow" style="margin-bottom:8px">Nuevo aviso</div>
+              <div class="fake-input" style="background:var(--bg-soft);border:1px solid var(--border);border-radius:11px;padding:12px 14px;font-size:13px;color:var(--fg-faint)">Escribe el título del aviso…</div>
+              <button class="btn" style="margin-top:11px;width:auto;padding:11px 22px" onclick="toast()">Publicar aviso<i data-lucide="send" style="width:15px;height:15px"></i></button>
+            </div>
+            <table>
+              <thead><tr><th>Aviso</th><th>Categoría</th><th>Publicado</th><th>Estado</th></tr></thead>
+              <tbody>
+                <tr><td>Tarifa nocturna actualizada</td><td><span class="pill ok">Tarifa</span></td><td>Hace 2 h</td><td><span class="pill ok">Visible</span></td></tr>
+                <tr><td>Nuevos chalecos reflectivos</td><td><span class="pill info">Seguridad</span></td><td>Ayer</td><td><span class="pill ok">Visible</span></td></tr>
+                <tr><td>Aniversario de la asociación</td><td><span class="pill warn">Evento</span></td><td>Hace 3 días</td><td><span class="pill ok">Visible</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="label-under" id="lbl">Panel de Administración · Acceso</div>
+
+<script>
+  const LBL = { login:'Panel de Administración · Acceso', resumen:'Admin · Resumen', socios:'Admin · Socios', cuotas:'Admin · Cuotas y pagos', lineas:'Admin · Líneas de trufi', avisos:'Admin · Avisos' };
+  function go(sub) {
+    const enApp = sub !== 'login';
+    document.querySelector('[data-view="login"]').classList.toggle('on', !enApp);
+    document.querySelector('[data-view="app"]').classList.toggle('on', enApp);
+    if (enApp) {
+      document.querySelectorAll('[data-sub]').forEach(v => v.classList.toggle('on', v.dataset.sub === sub));
+      document.querySelectorAll('[data-nav]').forEach(b => b.classList.toggle('on', b.dataset.nav === sub));
+    }
+    document.getElementById('lbl').textContent = LBL[sub] || 'Panel de Administración';
+    if (window.lucide) lucide.createIcons();
+  }
+  function toast() { alert('Mockup: el aviso se publicaría en las apps de los socios.'); }
+  lucide.createIcons();
+</script>
+</body>
+</html>
